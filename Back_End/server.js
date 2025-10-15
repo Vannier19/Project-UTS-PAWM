@@ -13,7 +13,7 @@ admin.initializeApp({
 const db = admin.firestore();
 console.log('Terhubung ke Firebase Firestore');
 
-const host = require(process.env.BACKEND_API);
+const host = process.env.BACKEND_API;
 const port = 3001;
 
 const requestListener = async function (req, res) {
