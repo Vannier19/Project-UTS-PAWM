@@ -79,7 +79,7 @@ const requestListener = async function (req, res) {
 
         } catch (error) {
             console.error('Error registrasi:', error);
-            kirimRespon(res, 500, { error: 'Terjadi kesalahan pada server' });
+            kirimRespon(res, 500, { error: '' });
         }
 
     } else if (req.url === '/login' && req.method === 'POST') {

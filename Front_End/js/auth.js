@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3001';
+const API_URL = 'https://project-uts-pawm-production.up.railway.app';
 
 const loginFormContainer = document.getElementById('login-form');
 const registerFormContainer = document.getElementById('register-form');
