@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-const serviceAccount = require('./serviceAccountKey.json.json');
+const serviceAccount = require(process.env.FIREBASE_SERVICE_ACCOUNT_PATH);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
