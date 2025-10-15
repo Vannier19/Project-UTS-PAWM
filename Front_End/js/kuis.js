@@ -1,3 +1,5 @@
+const API_URL = 'https://project-uts-pawm-production.up.railway.app';
+
 const ModulKuis = {
     topikSekarang: 'glb',
     indexSoal: 0,
@@ -13,7 +15,7 @@ const ModulKuis = {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            const response = await fetch('http://localhost:3001/progress-kuis', {
+            const response = await fetch(`${API_URL}/progress-kuis`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -35,7 +37,7 @@ const ModulKuis = {
             const token = localStorage.getItem('token');
             if (!token) return;
 
-            await fetch('http://localhost:3001/progress-kuis', {
+            await fetch(`${API_URL}/progress-kuis`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
