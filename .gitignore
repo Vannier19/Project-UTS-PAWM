@@ -1,0 +1,4 @@
+Back_End/.env
+Back_End/serviceAccountKey.json.json
+Back_End/node_modules/
+.DS_Store

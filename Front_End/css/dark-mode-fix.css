@@ -1,0 +1,83 @@
+body.dark-mode .quiz-card.sudah-selesai {
+    background-color: rgba(40, 167, 69, 0.08);
+    border-left-color: #28a745;
+}
+
+body.dark-mode .quiz-card.sudah-selesai:hover {
+    background-color: rgba(40, 167, 69, 0.12);
+}
+
+body.dark-mode .badge-selesai {
+    background: #28a745;
+    color: white;
+}
+
+body.dark-mode .info-skor {
+    background: rgba(88, 166, 255, 0.12);
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    color: var(--text-color);
+}
+
+.kotak-hasil {
+    background: #1e3c72;
+    color: white;
+}
+
+body.dark-mode .kotak-hasil {
+    background: #1e3c72;
+    color: white;
+}
+
+.tips-box {
+    background: #1e3c72;
+    color: white;
+}
+
+body.dark-mode .tips-box {
+    background: #1e3c72;
+    color: white;
+}
+
+body.dark-mode .start-quiz-btn {
+    background-color: #1e3c72;
+    color: white;
+}
+
+body.dark-mode .start-quiz-btn:hover {
+    background-color: #2a5298;
+}
+
+body.dark-mode .btn-primary,
+body.dark-mode .btn-submit {
+    background-color: #1e3c72;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-submit:hover {
+    background-color: #2a5298;
+}
+
+body.dark-mode .nav-box.terjawab {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+body.dark-mode .nav-box.aktif {
+    border: 2px solid var(--primary-color);
+    background-color: rgba(88, 166, 255, 0.15);
+}
+
+body.dark-mode .pesan-hasil {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+body.dark-mode .formula-box {
+    background-color: rgba(88, 166, 255, 0.1);
+    border-left-color: var(--primary-color);
+}
+
+body.dark-mode .video-container {
+    border-color: var(--border-color);
+}

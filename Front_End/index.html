@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laboratorium Fisika Virtual</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/content.css">
+    <link rel="stylesheet" href="css/materi-enhancement.css">
+    <link rel="stylesheet" href="css/lab.css">
+    <link rel="stylesheet" href="css/kuis.css">
+    <link rel="stylesheet" href="css/dark-mode-fix.css">
+    <link rel="stylesheet" href="css/modal.css">
+</head>
+<body>
+    <!-- Modal Konfirmasi Logout -->
+    <div id="logout-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div class="modal-header">
+                <i class="fas fa-sign-out-alt"></i>
+                <h3>Konfirmasi Logout</h3>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin keluar?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="cancel-logout" class="btn-cancel">
+                    <i class="fas fa-times"></i> Batal
+                </button>
+                <button id="confirm-logout" class="btn-confirm">
+                    <i class="fas fa-check"></i> Ya, Keluar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <h1>Laboratorium Fisika Virtual</h1>
+        <div class="header-right">
+            <div class="user-info">
+                <i class="fas fa-user-circle"></i>
+                <span id="username-display"></span>
+            </div>
+            <button id="logout-btn" class="logout-btn" title="Logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+            <label class="theme-switch" for="theme-checkbox">
+                <input type="checkbox" id="theme-checkbox" />
+                <div class="slider">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </label>
+        </div>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <nav>
+                <h3>Menu Utama</h3>
+                <ul>
+                    <li><a href="#" data-view="welcome" class="nav-link active"><i class="fas fa-home"></i> Selamat Datang</a></li>
+                    <li><a href="#" data-view="materi" class="nav-link"><i class="fas fa-book"></i> Materi</a></li>
+                    <li><a href="#" data-view="lab" class="nav-link"><i class="fas fa-flask"></i> Virtual Lab</a></li>
+                    <li><a href="#" data-view="kuis" class="nav-link"><i class="fas fa-question-circle"></i> Kuis</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="content-area">
+            <div id="welcome-view" class="view">
+                <h2>Selamat Datang di Laboratorium Fisika Virtual!</h2>
+                <p class="subtitle">Platform interaktif untuk mempelajari konsep-konsep dasar Fisika melalui simulasi dan kuis yang menantang.</p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Materi Interaktif</h3>
+                        <p>Pelajari ringkasan dan rumus-rumus penting dari setiap topik Fisika dasar, mulai dari GLB hingga Gerak Parabola.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-flask"></i>
+                        <h3>Simulasi Virtual</h3>
+                        <p>Coba langsung konsep fisika dengan simulasi interaktif. Ubah variabel seperti kecepatan dan sudut, lalu lihat hasilnya secara real-time!</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Kuis Interaktif</h3>
+                        <p>Uji pemahaman Anda dengan mengerjakan kuis untuk setiap topik. Lihat skor Anda dan lacak kemajuan belajar Anda.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div id="materi-view" class="view" hidden>
+                <h2>Pilih Topik Materi</h2>
+                <select id="materi-select" class="topic-select"></select>
+                <div id="materi-content-display"></div>
+            </div>
+
+            <div id="lab-view" class="view" hidden>
+                <h2>Pilih Simulasi Lab</h2>
+                <select id="lab-select" class="topic-select"></select>
+                <section class="virtual-lab">
+                    <h3 id="lab-title"></h3>
+                    <canvas id="physics-canvas" width="600" height="300"></canvas>
+                    
+                    <div class="controls">
+                        <div class="control-group" data-control="velocity">
+                            <label for="velocity">Kecepatan Awal (m/s):</label>
+                            <input type="range" id="velocity" min="1" max="50" value="10">
+                            <span id="velocity-value">10 m/s</span>
+                        </div>
+                        <div class="control-group" data-control="acceleration">
+                            <label for="acceleration">Percepatan (m/s²):</label>
+                            <input type="range" id="acceleration" min="-10" max="10" value="2">
+                            <span id="acceleration-value">2 m/s²</span>
+                        </div>
+                        <div class="control-group" data-control="angle">
+                            <label for="angle">Sudut (°):</label>
+                            <input type="range" id="angle" min="0" max="90" value="45">
+                            <span id="angle-value">45°</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lab-buttons">
+                        <button id="lab-start" class="btn-start"><i class="fas fa-play"></i> Start</button>
+                        <button id="lab-pause" class="btn-pause" style="display: none;"><i class="fas fa-pause"></i> Pause</button>
+                        <button id="lab-reset" class="btn-reset"><i class="fas fa-sync-alt"></i> Reset</button>
+                    </div>
+                    
+                    <!-- Panel Data Analisis -->
+                    <div id="analysis-panel" class="analysis-panel" style="display: none;">
+                        <h4><i class="fas fa-chart-line"></i> Data Percobaan</h4>
+                        <div class="data-grid">
+                            <div class="data-item">
+                                <label>Waktu (t):</label>
+                                <span id="time-display">0.0 s</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Posisi X:</label>
+                                <span id="posX-display">0.0 m</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Posisi Y:</label>
+                                <span id="posY-display">0.0 m</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Kecepatan X (vₓ):</label>
+                                <span id="velX-display">0.0 m/s</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Kecepatan Y (vᵧ):</label>
+                                <span id="velY-display">0.0 m/s</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Kecepatan Total (v):</label>
+                                <span id="velTotal-display">0.0 m/s</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Jarak Tempuh:</label>
+                                <span id="distance-display">0.0 m</span>
+                            </div>
+                            <div class="data-item">
+                                <label>Ketinggian:</label>
+                                <span id="height-display">0.0 m</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Info untuk Vertikal -->
+                        <div id="vertical-info" class="instruction-text" style="display: none;">
+                            <p><i class="fas fa-info-circle"></i> <strong>Gerak Vertikal:</strong> Klik dan drag batu untuk mengubah posisi awal, lalu tekan Start untuk memulai simulasi.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="kuis-view" class="view" hidden>
+                <h2>Kuis Fisika</h2>
+                
+                <!-- Menu Pilihan Kuis -->
+                <div id="quiz-menu">
+                    <h3>Pilih Topik Kuis</h3>
+                    <div id="quiz-card-container" class="quiz-cards"></div>
+                </div>
+                
+                <!-- Interface Kuis -->
+                <div id="quiz-interface" hidden>
+                    <h3 id="quiz-title"></h3>
+                    <div id="question-display"></div>
+                    <div id="nav-grid" class="question-nav"></div>
+                    <button id="quiz-submit-btn" class="btn-submit">Submit Jawaban</button>
+                    <div id="quiz-results" class="quiz-results"></div>
+                </div>
+            </div>
+
+            <!-- Konten Materi (tersembunyi, akan dimuat dinamis) -->
+            <div style="display: none;">
+                <div id="glb-content">
+                    <h3>📘 Gerak Lurus Beraturan (GLB)</h3>
+                    
+                    <div class="video-container">
+                        <h4>🎥 Video Pembelajaran</h4>
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/dHjWVlfNraM" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="materi-section">
+                        <h4>📖 Penjelasan</h4>
+                        <p>Gerak Lurus Beraturan (GLB) adalah gerak suatu benda pada lintasan lurus dengan kecepatan konstan. 
+                        Bayangkan kamu naik mobil di jalan tol yang lurus dan speedometer menunjukkan 80 km/jam terus-menerus tanpa berubah. 
+                        Itulah GLB!</p>
+                        
+                        <h4>✨ Karakteristik GLB:</h4>
+                        <ul>
+                            <li><strong>Kecepatan konstan</strong> - Tidak bertambah atau berkurang</li>
+                            <li><strong>Percepatan = 0</strong> - Tidak ada perubahan kecepatan</li>
+                            <li><strong>Jarak sebanding waktu</strong> - Makin lama bergerak, makin jauh jaraknya</li>
+                            <li><strong>Lintasan lurus</strong> - Tidak belok-belok</li>
+                        </ul>
+                        
+                        <h4>📐 Rumus Utama:</h4>
+                        <div class="formula-box">
+                            <p><strong>s = v × t</strong></p>
+                            <p>Dimana:</p>
+                            <ul>
+                                <li><strong>s</strong> = jarak tempuh (meter)</li>
+                                <li><strong>v</strong> = kecepatan (m/s)</li>
+                                <li><strong>t</strong> = waktu (sekon)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>💡 Tips Memahami GLB:</h4>
+                        <div class="tips-box">
+                            <ol>
+                                <li><strong>Ingat kata kunci "KONSTAN"</strong> - Kecepatan GLB tidak pernah berubah</li>
+                                <li><strong>Grafik v-t adalah garis mendatar</strong> - Karena kecepatannya tetap</li>
+                                <li><strong>Contoh nyata:</strong> Mobil di jalan tol, kereta api di rel lurus</li>
+                                <li><strong>Rumus simpel:</strong> Jarak = Kecepatan × Waktu (kayak beli barang: Total = Harga × Jumlah)</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="glbb-content">
+                    <h3>📗 Gerak Lurus Berubah Beraturan (GLBB)</h3>
+                    
+                    <div class="video-container">
+                        <h4>🎥 Video Pembelajaran</h4>
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/dHjWVlfNraM" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="materi-section">
+                        <h4>📖 Penjelasan</h4>
+                        <p>GLBB adalah gerak suatu benda pada lintasan lurus dengan percepatan konstan. 
+                        Berbeda dengan GLB, di GLBB kecepatan benda berubah secara teratur. Contohnya saat motor dipercepat atau direm, 
+                        kecepatannya berubah tapi perubahannya teratur (tidak mendadak).</p>
+                        
+                        <h4>✨ Karakteristik GLBB:</h4>
+                        <ul>
+                            <li><strong>Percepatan konstan</strong> - Perubahan kecepatannya tetap</li>
+                            <li><strong>Kecepatan berubah teratur</strong> - Bisa bertambah (dipercepat) atau berkurang (direm)</li>
+                            <li><strong>Grafik v-t berupa garis miring</strong> - Naik jika dipercepat, turun jika direm</li>
+                            <li><strong>Jarak bisa dihitung</strong> - Pakai rumus khusus GLBB</li>
+                        </ul>
+                        
+                        <h4>📐 Rumus GLBB:</h4>
+                        <div class="formula-box">
+                            <p><strong>1. v = v₀ + at</strong> (Kecepatan akhir)</p>
+                            <p><strong>2. s = v₀t + ½at²</strong> (Jarak tempuh)</p>
+                            <p><strong>3. v² = v₀² + 2as</strong> (Tanpa waktu)</p>
+                            <p>Dimana:</p>
+                            <ul>
+                                <li><strong>v</strong> = kecepatan akhir (m/s)</li>
+                                <li><strong>v₀</strong> = kecepatan awal (m/s)</li>
+                                <li><strong>a</strong> = percepatan (m/s²)</li>
+                                <li><strong>t</strong> = waktu (s)</li>
+                                <li><strong>s</strong> = jarak (m)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>💡 Tips Memahami GLBB:</h4>
+                        <div class="tips-box">
+                            <ol>
+                                <li><strong>Percepatan positif (+)</strong> = benda makin cepat (dipercepat)</li>
+                                <li><strong>Percepatan negatif (-)</strong> = benda makin lambat (direm/perlambatan)</li>
+                                <li><strong>Jika v₀ = 0</strong>, berarti benda mulai dari diam</li>
+                                <li><strong>Pilih rumus yang sesuai:</strong>
+                                    <ul>
+                                        <li>Ada waktu? Pakai rumus 1 atau 2</li>
+                                        <li>Tidak ada waktu? Pakai rumus 3</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Contoh:</strong> Motor dipercepat, mobil direm, bola menggelinding di bidang miring</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="vertikal-content">
+                    <h3>📕 Gerak Vertikal (Jatuh Bebas)</h3>
+                    
+                    <div class="video-container">
+                        <h4>🎥 Video Pembelajaran</h4>
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/BVgemK1Y2wA" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="materi-section">
+                        <h4>📖 Penjelasan</h4>
+                        <p>Gerak vertikal adalah gerak benda yang bergerak pada arah vertikal (atas-bawah) di bawah pengaruh gravitasi bumi. 
+                        Gravitasi bumi selalu menarik benda ke bawah dengan percepatan g = 9,8 m/s² (biasanya dibulatkan jadi 10 m/s²). 
+                        Contohnya: buah jatuh dari pohon, bola dilempar ke atas, atau kamu melompat.</p>
+                        
+                        <h4>✨ Jenis Gerak Vertikal:</h4>
+                        <ul>
+                            <li><strong>Gerak Jatuh Bebas</strong> - Benda dijatuhkan tanpa kecepatan awal (v₀ = 0)</li>
+                            <li><strong>Gerak Vertikal ke Atas</strong> - Benda dilempar ke atas, makin lama makin lambat sampai berhenti di puncak</li>
+                            <li><strong>Gerak Vertikal ke Bawah</strong> - Benda dilempar ke bawah dengan kecepatan awal</li>
+                        </ul>
+                        
+                        <h4>📐 Rumus Gerak Vertikal:</h4>
+                        <div class="formula-box">
+                            <p><strong>1. h = v₀t + ½gt²</strong> (Ketinggian/jarak)</p>
+                            <p><strong>2. v = v₀ + gt</strong> (Kecepatan)</p>
+                            <p><strong>3. v² = v₀² + 2gh</strong> (Tanpa waktu)</p>
+                            <p>Dimana:</p>
+                            <ul>
+                                <li><strong>h</strong> = ketinggian/jarak vertikal (m)</li>
+                                <li><strong>v₀</strong> = kecepatan awal (m/s)</li>
+                                <li><strong>v</strong> = kecepatan akhir (m/s)</li>
+                                <li><strong>g</strong> = percepatan gravitasi = 9,8 m/s² ≈ 10 m/s²</li>
+                                <li><strong>t</strong> = waktu (s)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>💡 Tips Memahami Gerak Vertikal:</h4>
+                        <div class="tips-box">
+                            <ol>
+                                <li><strong>Arah ke bawah (+)</strong>, arah ke atas (-) untuk percepatan</li>
+                                <li><strong>Jatuh bebas (v₀ = 0):</strong> Gunakan rumus h = ½gt² dan v = gt</li>
+                                <li><strong>Di puncak:</strong> Kecepatan = 0 (benda berhenti sejenak sebelum jatuh)</li>
+                                <li><strong>Waktu naik = waktu turun</strong> (jika dilempar dari tanah)</li>
+                                <li><strong>Kecepatan saat kembali ke tanah = kecepatan awal</strong> (tapi arahnya berlawanan)</li>
+                                <li><strong>g selalu 9,8 atau 10 m/s²</strong> - Jangan lupa tambahkan ke rumus!</li>
+                                <li><strong>Contoh:</strong> Buah kelapa jatuh, bola basket dilempar ke ring, terjun payung</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="parabola-content">
+                    <h3>📙 Gerak Parabola</h3>
+                    
+                    <div class="video-container">
+                        <h4>🎥 Video Pembelajaran</h4>
+                        <iframe width="100%" height="400" src="https://www.youtube.com/embed/8NLzuURxFwY" 
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="materi-section">
+                        <h4>📖 Penjelasan</h4>
+                        <p>Gerak parabola adalah gerak proyektil yang lintasannya berbentuk lengkungan parabola. 
+                        Ini terjadi saat benda dilempar dengan sudut tertentu terhadap horizontal. Gerak parabola adalah kombinasi 
+                        GLB (arah horizontal) dan GLBB (arah vertikal). Contohnya: bola sepak ditendang, peluru ditembakkan, air dari selang.</p>
+                        
+                        <h4>✨ Karakteristik Gerak Parabola:</h4>
+                        <ul>
+                            <li><strong>Sumbu X (horizontal): GLB</strong> - Kecepatan horizontal (vₓ) konstan</li>
+                            <li><strong>Sumbu Y (vertikal): GLBB</strong> - Kecepatan vertikal (vᵧ) berubah karena gravitasi</li>
+                            <li><strong>Lintasan parabola</strong> - Bentuk lengkungan seperti huruf U terbalik</li>
+                            <li><strong>Sudut 45° = jarak terjauh</strong> - Untuk mencapai jarak maksimum</li>
+                        </ul>
+                        
+                        <h4>📐 Rumus Gerak Parabola:</h4>
+                        <div class="formula-box">
+                            <p><strong>Komponen Kecepatan:</strong></p>
+                            <ul>
+                                <li>vₓ = v₀ cos θ (kecepatan horizontal)</li>
+                                <li>vᵧ = v₀ sin θ (kecepatan vertikal awal)</li>
+                            </ul>
+                            
+                            <p><strong>Posisi:</strong></p>
+                            <ul>
+                                <li><strong>x = v₀ cos θ × t</strong> (posisi horizontal)</li>
+                                <li><strong>y = v₀ sin θ × t - ½gt²</strong> (posisi vertikal)</li>
+                            </ul>
+                            
+                            <p><strong>Rumus Penting:</strong></p>
+                            <ul>
+                                <li><strong>Waktu total: t = (2v₀ sin θ)/g</strong></li>
+                                <li><strong>Tinggi maksimum: h = (v₀² sin² θ)/(2g)</strong></li>
+                                <li><strong>Jarak mendatar: R = (v₀² sin 2θ)/g</strong></li>
+                            </ul>
+                            
+                            <p>Dimana:</p>
+                            <ul>
+                                <li><strong>v₀</strong> = kecepatan awal (m/s)</li>
+                                <li><strong>θ</strong> = sudut elevasi (derajat)</li>
+                                <li><strong>g</strong> = 9,8 m/s² ≈ 10 m/s²</li>
+                                <li><strong>t</strong> = waktu (s)</li>
+                            </ul>
+                        </div>
+                        
+                        <h4>💡 Tips Memahami Gerak Parabola:</h4>
+                        <div class="tips-box">
+                            <ol>
+                                <li><strong>Pisahkan X dan Y!</strong> Gerak horizontal dan vertikal independen (tidak saling pengaruh)</li>
+                                <li><strong>Horizontal = GLB</strong> - Kecepatan vₓ tidak berubah (tidak ada percepatan)</li>
+                                <li><strong>Vertikal = GLBB</strong> - Kecepatan vᵧ berubah karena gravitasi</li>
+                                <li><strong>Di puncak parabola:</strong> vᵧ = 0, tapi vₓ tetap ada!</li>
+                                <li><strong>Sudut 45° optimal</strong> untuk jarak terjauh (pada ketinggian yang sama)</li>
+                                <li><strong>sin 2θ:</strong> Ingat sin 90° = 1 (maksimum), jadi θ = 45°</li>
+                                <li><strong>Strategi soal:</strong>
+                                    <ul>
+                                        <li>Cari dulu vₓ dan vᵧ dari v₀ dan θ</li>
+                                        <li>Gunakan rumus GLB untuk arah X</li>
+                                        <li>Gunakan rumus GLBB untuk arah Y</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Contoh nyata:</strong> Bola sepak ditendang, panah ditembakkan, air mancur, bom dijatuhkan dari pesawat</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/materi.js"></script>
+    <script src="js/lab.js"></script>
+    <script src="js/kuis.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

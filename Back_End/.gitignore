@@ -1,0 +1,8 @@
+# Abaikan file konfigurasi rahasia
+serviceAccountKey.json
+
+# Abaikan folder library Node.js
+node_modules
+
+# Abaikan file environment
+.env
