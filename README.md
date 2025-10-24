@@ -1,15 +1,15 @@
-# Laboratorium Fisika Virtual
+# Virtual Physics Laboratory
 
-Dibuat Oleh:
+Created By:
 Stevan Einer Bonagabe / 18223028
 
-## Cara Menjalankan
+## How to Run
 
-### 1. Setup File Environment (PENTING!)
+### 1. Setup Environment Files (IMPORTANT!)
 
-Buat file `.env` di folder `Back_End/` (kuncinya ada di laporan)
+Create a `.env` file in the `Back_End/` folder (key is in the report)
 
-Buat file `serviceAccountKey.json.json` di folder `Back_End/` (kuncinya ada di laporan)
+Create a `serviceAccountKey.json.json` file in the `Back_End/` folder (key is in the report)
 
 
 ### 2. Install Dependencies
@@ -18,27 +18,27 @@ cd Back_End
 npm install
 ```
 
-### 3. Jalankan Server Backend
+### 3. Run Backend Server
 ```bash
 cd Back_End
 node server.js
 ```
 
-Server akan berjalan di: `http://localhost:3001`
+Server will run at: `http://localhost:3001`
 
-## Struktur Proyek
+## Project Structure
 
 ```
 Back_End/
-├── server.js              # File server utama
+├── server.js              # Main server file
 ├── package.json           # Dependencies
-├── .env                   # Kunci rahasia JWT (TIDAK di Git - buat manual)
-└── serviceAccountKey.json.json  # Kredensial Firebase (TIDAK di Git - buat manual)
+├── .env                   # JWT secret key (NOT in Git - create manually)
+└── serviceAccountKey.json.json  # Firebase credentials (NOT in Git - create manually)
 
 Front_End/
-├── login.html             # Halaman Login/Register
-├── index.html             # Aplikasi utama (butuh autentikasi)
-├── css/                   # File stylesheet
+├── login.html             # Login/Register page
+├── index.html             # Main application (requires authentication)
+├── css/                   # Stylesheet files
 │   ├── auth.css
 │   ├── main.css
 │   ├── sidebar.css
@@ -47,15 +47,15 @@ Front_End/
 │   ├── kuis.css
 │   ├── materi-enhancement.css
 │   └── dark-mode-fix.css
-├── js/                    # File JavaScript
-│   ├── auth.js            # Logika autentikasi
-│   ├── main.js            # Logika aplikasi utama
+├── js/                    # JavaScript files
+│   ├── auth.js            # Authentication logic
+│   ├── main.js            # Main application logic
 │   ├── theme.js           # Dark/Light mode
-│   ├── materi.js          # Modul materi
-│   ├── lab.js             # Modul laboratorium virtual
-│   ├── kuis.js            # Modul kuis
-│   └── data.js            # Data soal kuis
-└── assets/                # Gambar
+│   ├── materi.js          # Learning materials module
+│   ├── lab.js             # Virtual laboratory module
+│   ├── kuis.js            # Quiz module
+│   └── data.js            # Quiz questions data
+└── assets/                # Images
     ├── car.png
     ├── rock.png
     └── parabola.png
@@ -64,10 +64,10 @@ Front_End/
 ## API Endpoints
 
 ### `GET /`
-Mengembalikan status server
+Returns server status
 
 ### `POST /register`
-Daftar user baru
+Register new user
 ```json
 {
   "username": "Tester",
@@ -76,7 +76,7 @@ Daftar user baru
 ```
 
 ### `POST /login`
-Login user - mengembalikan JWT token
+User login - returns JWT token
 ```json
 {
   "username": "Tester",
@@ -85,13 +85,13 @@ Login user - mengembalikan JWT token
 ```
 
 ### `GET /progress-kuis`
-Mengambil progress kuis user (butuh token)
+Retrieve user's quiz progress (requires token)
 ```
 Headers: { Authorization: 'Bearer <token>' }
 ```
 
 ### `POST /progress-kuis`
-Menyimpan progress kuis user (butuh token)
+Save user's quiz progress (requires token)
 ```json
 {
   "topik": "glb",
@@ -101,61 +101,61 @@ Menyimpan progress kuis user (butuh token)
 }
 ```
 
-## Fitur Aplikasi
+## Application Features
 
-### 🎓 Materi Pembelajaran
-- 4 Topik Fisika: GLB, GLBB, Gerak Vertikal, Gerak Parabola
-- Video pembelajaran YouTube
-- Penjelasan lengkap dengan contoh
-- Tips belajar untuk setiap topik
-- Formula box dengan rumus-rumus penting
+### 🎓 Learning Materials
+- 4 Physics Topics: GLB, GLBB, Vertical Motion, Projectile Motion
+- YouTube learning videos
+- Complete explanations with examples
+- Study tips for each topic
+- Formula box with important equations
 
-### 🧪 Laboratorium Virtual
-- Simulasi GLB (Gerak Lurus Beraturan)
-- Simulasi GLBB (Gerak Lurus Berubah Beraturan)
-- Simulasi Gerak Vertikal (Jatuh Bebas)
-- Simulasi Gerak Parabola
-- Visualisasi real-time dengan grafik
-- Panel analisis data
+### 🧪 Virtual Laboratory
+- GLB Simulation (Uniform Linear Motion)
+- GLBB Simulation (Uniformly Accelerated Linear Motion)
+- Vertical Motion Simulation (Free Fall)
+- Projectile Motion Simulation
+- Real-time visualization with graphs
+- Data analysis panel
 
-### 📝 Kuis Interaktif
-- 10 soal per topik (total 40 soal)
-- Progress tersimpan otomatis di database
-- Badge "✓ Selesai" untuk kuis yang sudah dikerjakan
-- Tampilan skor dan riwayat jawaban
-- Bisa mengerjakan ulang kuis
+### 📝 Interactive Quiz
+- 10 questions per topic (40 questions total)
+- Progress automatically saved to database
+- "✓ Completed" badge for finished quizzes
+- Score display and answer history
+- Can retake quizzes
 
 ### 🌓 Dark Mode
 - Toggle dark/light theme
-- Warna konsisten di semua mode
-- Tersimpan di localStorage
+- Consistent colors in all modes
+- Saved in localStorage
 
 ## Troubleshooting
 
-**"Tidak bisa terhubung ke server"**
-- Pastikan backend berjalan: `node server.js`
-- Cek apakah port 3001 tersedia
+**"Cannot connect to server"**
+- Make sure backend is running: `node server.js`
+- Check if port 3001 is available
 
-**"Username sudah dipakai"**
-- Gunakan username yang berbeda
+**"Username already taken"**
+- Use a different username
 
-**"Token tidak valid" atau halaman redirect ke login**
-- Hapus localStorage browser (F12 → Application → Local Storage → Clear)
-- Login lagi
+**"Invalid token" or page redirects to login**
+- Clear browser localStorage (F12 → Application → Local Storage → Clear)
+- Login again
 
-**"Error Firebase" atau "Tidak bisa terhubung ke Firebase"**
-- Pastikan file `.env` dan `serviceAccountKey.json.json` ada di folder `Back_End/`
-- Cek isi file sudah benar (copy dari instruksi setup)
-- Verifikasi proyek Firebase aktif
+**"Firebase Error" or "Cannot connect to Firebase"**
+- Make sure `.env` and `serviceAccountKey.json.json` files exist in `Back_End/` folder
+- Check file contents are correct (copy from setup instructions)
+- Verify Firebase project is active
 
-**"Gambar di lab ada background putih"**
-- Pastikan file PNG memang transparent
+**"Lab images have white background"**
+- Make sure PNG files are actually transparent
 - Clear browser cache (Ctrl+F5)
-- Cek console browser untuk error loading gambar
+- Check browser console for image loading errors
 
-## Persyaratan Environment
+## Environment Requirements
 
-- Node.js (versi 14 atau lebih baru)
+- Node.js (version 14 or newer)
 - npm
-- Akun Firebase (untuk database)
-- Browser modern (Chrome, Firefox, Edge)
+- Firebase account (for database)
+- Modern browser (Chrome, Firefox, Edge)
