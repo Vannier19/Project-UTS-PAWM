@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laboratorium Fisika Virtual</title>
+    <title>Virtual Physics Laboratory</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/sidebar.css">
@@ -15,29 +15,28 @@
     <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
-    <!-- Modal Konfirmasi Logout -->
     <div id="logout-modal" class="modal-overlay" style="display: none;">
         <div class="modal-box">
             <div class="modal-header">
                 <i class="fas fa-sign-out-alt"></i>
-                <h3>Konfirmasi Logout</h3>
+                <h3>Logout Confirmation</h3>
             </div>
             <div class="modal-body">
-                <p>Apakah Anda yakin ingin keluar?</p>
+                <p>Are you sure you want to logout?</p>
             </div>
             <div class="modal-footer">
                 <button id="cancel-logout" class="btn-cancel">
-                    <i class="fas fa-times"></i> Batal
+                    <i class="fas fa-times"></i> Cancel
                 </button>
                 <button id="confirm-logout" class="btn-confirm">
-                    <i class="fas fa-check"></i> Ya, Keluar
+                    <i class="fas fa-check"></i> Yes, Logout
                 </button>
             </div>
         </div>
     </div>
 
     <header>
-        <h1>Laboratorium Fisika Virtual</h1>
+        <h1>Virtual Physics Laboratory</h1>
         <div class="header-right">
             <div class="user-info">
                 <i class="fas fa-user-circle"></i>
@@ -60,51 +59,51 @@
     <main>
         <aside class="sidebar">
             <nav>
-                <h3>Menu Utama</h3>
+                <h3>Main Menu</h3>
                 <ul>
-                    <li><a href="#" data-view="welcome" class="nav-link active"><i class="fas fa-home"></i> Selamat Datang</a></li>
-                    <li><a href="#" data-view="materi" class="nav-link"><i class="fas fa-book"></i> Materi</a></li>
+                    <li><a href="#" data-view="welcome" class="nav-link active"><i class="fas fa-home"></i> Welcome</a></li>
+                    <li><a href="#" data-view="materi" class="nav-link"><i class="fas fa-book"></i> Materials</a></li>
                     <li><a href="#" data-view="lab" class="nav-link"><i class="fas fa-flask"></i> Virtual Lab</a></li>
-                    <li><a href="#" data-view="kuis" class="nav-link"><i class="fas fa-question-circle"></i> Kuis</a></li>
+                    <li><a href="#" data-view="kuis" class="nav-link"><i class="fas fa-question-circle"></i> Quiz</a></li>
                 </ul>
             </nav>
         </aside>
 
         <section class="content-area">
             <div id="welcome-view" class="view">
-                <h2>Selamat Datang di Laboratorium Fisika Virtual!</h2>
-                <p class="subtitle">Platform interaktif untuk mempelajari konsep-konsep dasar Fisika melalui simulasi dan kuis yang menantang.</p>
+                <h2>Welcome to the Virtual Physics Laboratory!</h2>
+                <p class="subtitle">An interactive platform to learn basic Physics concepts through simulations and challenging quizzes.</p>
 
                 <div class="features-grid">
                     <div class="feature-card">
                         <i class="fas fa-book-open"></i>
-                        <h3>Materi Interaktif</h3>
-                        <p>Pelajari ringkasan dan rumus-rumus penting dari setiap topik Fisika dasar, mulai dari GLB hingga Gerak Parabola.</p>
+                        <h3>Interactive Materials</h3>
+                        <p>Learn summaries and important formulas from each basic Physics topic, from Uniform Linear Motion to Projectile Motion.</p>
                     </div>
 
                     <div class="feature-card">
                         <i class="fas fa-flask"></i>
-                        <h3>Simulasi Virtual</h3>
-                        <p>Coba langsung konsep fisika dengan simulasi interaktif. Ubah variabel seperti kecepatan dan sudut, lalu lihat hasilnya secara real-time!</p>
+                        <h3>Virtual Simulation</h3>
+                        <p>Experience physics concepts directly with interactive simulations. Change variables like velocity and angle, then see the results in real-time!</p>
                     </div>
 
                     <div class="feature-card">
                         <i class="fas fa-question-circle"></i>
-                        <h3>Kuis Interaktif</h3>
-                        <p>Uji pemahaman Anda dengan mengerjakan kuis untuk setiap topik. Lihat skor Anda dan lacak kemajuan belajar Anda.</p>
+                        <h3>Interactive Quiz</h3>
+                        <p>Test your understanding by taking quizzes for each topic. View your scores and track your learning progress.</p>
                     </div>
                 </div>
             </div>
             </div>
 
             <div id="materi-view" class="view" hidden>
-                <h2>Pilih Topik Materi</h2>
+                <h2>Select Material Topic</h2>
                 <select id="materi-select" class="topic-select"></select>
                 <div id="materi-content-display"></div>
             </div>
 
             <div id="lab-view" class="view" hidden>
-                <h2>Pilih Simulasi Lab</h2>
+                <h2>Select Lab Simulation</h2>
                 <select id="lab-select" class="topic-select"></select>
                 <section class="virtual-lab">
                     <h3 id="lab-title"></h3>
@@ -112,17 +111,17 @@
                     
                     <div class="controls">
                         <div class="control-group" data-control="velocity">
-                            <label for="velocity">Kecepatan Awal (m/s):</label>
+                            <label for="velocity">Initial Velocity (m/s):</label>
                             <input type="range" id="velocity" min="1" max="50" value="10">
                             <span id="velocity-value">10 m/s</span>
                         </div>
                         <div class="control-group" data-control="acceleration">
-                            <label for="acceleration">Percepatan (m/s²):</label>
+                            <label for="acceleration">Acceleration (m/s²):</label>
                             <input type="range" id="acceleration" min="-10" max="10" value="2">
                             <span id="acceleration-value">2 m/s²</span>
                         </div>
                         <div class="control-group" data-control="angle">
-                            <label for="angle">Sudut (°):</label>
+                            <label for="angle">Angle (°):</label>
                             <input type="range" id="angle" min="0" max="90" value="45">
                             <span id="angle-value">45°</span>
                         </div>
@@ -134,67 +133,63 @@
                         <button id="lab-reset" class="btn-reset"><i class="fas fa-sync-alt"></i> Reset</button>
                     </div>
                     
-                    <!-- Panel Data Analisis -->
                     <div id="analysis-panel" class="analysis-panel" style="display: none;">
-                        <h4><i class="fas fa-chart-line"></i> Data Percobaan</h4>
+                        <h4><i class="fas fa-chart-line"></i> Experiment Data</h4>
                         <div class="data-grid">
                             <div class="data-item">
-                                <label>Waktu (t):</label>
+                                <label>Time (t):</label>
                                 <span id="time-display">0.0 s</span>
                             </div>
                             <div class="data-item">
-                                <label>Posisi X:</label>
+                                <label>Position X:</label>
                                 <span id="posX-display">0.0 m</span>
                             </div>
                             <div class="data-item">
-                                <label>Posisi Y:</label>
+                                <label>Position Y:</label>
                                 <span id="posY-display">0.0 m</span>
                             </div>
                             <div class="data-item">
-                                <label>Kecepatan X (vₓ):</label>
+                                <label>Velocity X (vₓ):</label>
                                 <span id="velX-display">0.0 m/s</span>
                             </div>
                             <div class="data-item">
-                                <label>Kecepatan Y (vᵧ):</label>
+                                <label>Velocity Y (vᵧ):</label>
                                 <span id="velY-display">0.0 m/s</span>
                             </div>
                             <div class="data-item">
-                                <label>Kecepatan Total (v):</label>
+                                <label>Total Velocity (v):</label>
                                 <span id="velTotal-display">0.0 m/s</span>
                             </div>
                             <div class="data-item">
-                                <label>Jarak Tempuh:</label>
+                                <label>Distance Traveled:</label>
                                 <span id="distance-display">0.0 m</span>
                             </div>
                             <div class="data-item">
-                                <label>Ketinggian:</label>
+                                <label>Height:</label>
                                 <span id="height-display">0.0 m</span>
                             </div>
                         </div>
                         
-                        <!-- Info untuk Vertikal -->
                         <div id="vertical-info" class="instruction-text" style="display: none;">
-                            <p><i class="fas fa-info-circle"></i> <strong>Gerak Vertikal:</strong> Klik dan drag batu untuk mengubah posisi awal, lalu tekan Start untuk memulai simulasi.</p>
+                            <p><i class="fas fa-info-circle"></i> <strong>Vertical Motion:</strong> Click and drag the rock to change initial position, then press Start to begin simulation.</p>
                         </div>
                     </div>
                 </section>
             </div>
 
             <div id="kuis-view" class="view" hidden>
-                <h2>Kuis Fisika</h2>
+                <h2>Physics Quiz</h2>
                 
-                <!-- Menu Pilihan Kuis -->
                 <div id="quiz-menu">
-                    <h3>Pilih Topik Kuis</h3>
+                    <h3>Select Quiz Topic</h3>
                     <div id="quiz-card-container" class="quiz-cards"></div>
                 </div>
                 
-                <!-- Interface Kuis -->
                 <div id="quiz-interface" hidden>
                     <h3 id="quiz-title"></h3>
                     <div id="question-display"></div>
                     <div id="nav-grid" class="question-nav"></div>
-                    <button id="quiz-submit-btn" class="btn-submit">Submit Jawaban</button>
+                    <button id="quiz-submit-btn" class="btn-submit">Submit Answer</button>
                     <div id="quiz-results" class="quiz-results"></div>
                 </div>
             </div>

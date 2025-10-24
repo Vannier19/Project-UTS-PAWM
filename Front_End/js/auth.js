@@ -31,7 +31,7 @@ loginForm.addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
     
     if (!username || !password) {
-        showError(loginError, 'Username dan password harus diisi');
+        showError(loginError, 'Username and password are required');
         return;
     }
     
@@ -55,11 +55,11 @@ loginForm.addEventListener('submit', async (e) => {
             localStorage.setItem('username', data.username);
             window.location.href = 'index.html';
         } else {
-            showError(loginError, data.error || 'Login gagal');
+            showError(loginError, data.error || 'Login failed');
         }
     } catch (error) {
         console.error('Login error:', error);
-        showError(loginError, 'Tidak dapat terhubung ke server. Pastikan backend sudah berjalan.');
+        showError(loginError, 'Cannot connect to server. Please make sure the backend is running.');
     } finally {
         submitBtn.classList.remove('loading');
     }
@@ -73,22 +73,22 @@ registerForm.addEventListener('submit', async (e) => {
     const confirmPassword = document.getElementById('register-confirm-password').value;
     
     if (!username || !password || !confirmPassword) {
-        showError(registerError, 'Semua kolom harus diisi');
+        showError(registerError, 'All fields are required');
         return;
     }
     
     if (username.length < 3) {
-        showError(registerError, 'Username minimal 3 karakter');
+        showError(registerError, 'Username must be at least 3 characters');
         return;
     }
     
     if (password.length < 6) {
-        showError(registerError, 'Password minimal 6 karakter');
+        showError(registerError, 'Password must be at least 6 characters');
         return;
     }
     
     if (password !== confirmPassword) {
-        showError(registerError, 'Password tidak sama');
+        showError(registerError, 'Passwords do not match');
         return;
     }
     
@@ -108,17 +108,17 @@ registerForm.addEventListener('submit', async (e) => {
         const data = await response.json();
         
         if (response.ok) {
-            showSuccess(registerSuccess, 'Registrasi berhasil! Silakan login.');
+            showSuccess(registerSuccess, 'Registration successful! Please login.');
             registerForm.reset();
             setTimeout(() => {
                 showLoginLink.click();
             }, 2000);
         } else {
-            showError(registerError, data.error || 'Registrasi gagal');
+            showError(registerError, data.error || 'Registration failed');
         }
     } catch (error) {
         console.error('Register error:', error);
-        showError(registerError, 'Tidak dapat terhubung ke server. Pastikan backend sudah berjalan.');
+        showError(registerError, 'Cannot connect to server. Please make sure the backend is running.');
     } finally {
         submitBtn.classList.remove('loading');
     }

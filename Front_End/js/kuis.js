@@ -74,17 +74,17 @@ const ModulKuis = {
             html += `
                 <div class="quiz-card ${sudahSelesai ? 'sudah-selesai' : ''}" style="border-left-color: #${warna}">
                     <div class="quiz-card-header">
-                        <h4>Kuis: ${topik.toUpperCase()}</h4>
-                        ${sudahSelesai ? '<span class="badge-selesai">✓ Selesai</span>' : ''}
+                        <h4>Quiz: ${topik.toUpperCase()}</h4>
+                        ${sudahSelesai ? '<span class="badge-selesai">✓ Completed</span>' : ''}
                     </div>
-                    <p>Uji pemahaman kamu tentang materi ${topik}.</p>
+                    <p>Test your understanding of ${topik} material.</p>
                     ${sudahSelesai ? `
                         <div class="info-skor">
-                            <strong>Skor:</strong> ${skor}/${total} (${Math.round(skor/total*100)}%)
+                            <strong>Score:</strong> ${skor}/${total} (${Math.round(skor/total*100)}%)
                         </div>
                     ` : ''}
                     <button class="start-quiz-btn" data-topic="${topik}">
-                        ${sudahSelesai ? 'Kerjakan Lagi' : 'Mulai Kuis'}
+                        ${sudahSelesai ? 'Retake Quiz' : 'Start Quiz'}
                     </button>
                 </div>
             `;
@@ -100,7 +100,7 @@ const ModulKuis = {
         
         document.getElementById('quiz-menu').hidden = true;
         document.getElementById('quiz-interface').hidden = false;
-        document.getElementById('quiz-title').textContent = `Kuis: ${topik.toUpperCase()}`;
+        document.getElementById('quiz-title').textContent = `Quiz: ${topik.toUpperCase()}`;
         
         this.tampilkanSoal();
     },
@@ -122,7 +122,7 @@ const ModulKuis = {
 
         document.getElementById('question-display').innerHTML = `
             <div class="question-block">
-                <h4>SOAL NO ${this.indexSoal + 1}</h4>
+                <h4>QUESTION NO ${this.indexSoal + 1}</h4>
                 <p>${soal.question}</p>
                 <div class="options-list">
                     ${opsiHTML}
@@ -164,13 +164,13 @@ const ModulKuis = {
         const persen = Math.round((benar / total) * 100);
         
         const hasil = persen >= 70 ? 
-            '<p class="pesan-hasil bagus">Bagus! Kamu lulus! </p>' : 
-            '<p class="pesan-hasil kurang">Terus belajar ya! Kamu bisa coba lagi.</p>';
+            '<p class="pesan-hasil bagus">Great! You passed!</p>' : 
+            '<p class="pesan-hasil kurang">Keep learning! You can try again.</p>';
 
         document.getElementById('quiz-results').innerHTML = `
             <div class="kotak-hasil">
-                <h3>Kuis Selesai!</h3>
-                <p>Skor Kamu: <strong>${benar}/${total}</strong> (${persen}%)</p>
+                <h3>Quiz Completed!</h3>
+                <p>Your Score: <strong>${benar}/${total}</strong> (${persen}%)</p>
                 ${hasil}
             </div>
         `;
