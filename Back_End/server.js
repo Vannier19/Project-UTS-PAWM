@@ -38,7 +38,7 @@ const requestListener = async function (req, res) {
             const { username, password } = body;
 
             if (!username || !password) {
-                kirimRespon(res, 400, { error: 'Username dan password harus diisi' });
+                kirimRespon(res, 400, { error: 'Username and password are required' });
                 return;
             }
 
@@ -46,7 +46,7 @@ const requestListener = async function (req, res) {
             const doc = await userRef.get();
 
             if (doc.exists) {
-                kirimRespon(res, 409, { error: 'Username sudah dipakai' });
+                kirimRespon(res, 409, { error: 'Username already exists' });
                 return;
             }
 
@@ -75,7 +75,7 @@ const requestListener = async function (req, res) {
             
             await batch.commit();
 
-            kirimRespon(res, 201, { message: 'Akun berhasil dibuat' });
+            kirimRespon(res, 201, { message: 'Account created successfully' });
 
         } catch (error) {
             console.error('Error registrasi:', error);
@@ -88,7 +88,7 @@ const requestListener = async function (req, res) {
             const { username, password } = body;
 
             if (!username || !password) {
-                kirimRespon(res, 400, { error: 'Username dan password harus diisi' });
+                kirimRespon(res, 400, { error: 'Username and password are required' });
                 return;
             }
 
@@ -96,7 +96,7 @@ const requestListener = async function (req, res) {
             const doc = await userRef.get();
 
             if (!doc.exists) {
-                kirimRespon(res, 401, { error: 'Username atau password salah' });
+                kirimRespon(res, 401, { error: 'Invalid username or password' });
                 return;
             }
 
@@ -104,7 +104,7 @@ const requestListener = async function (req, res) {
             const passwordBenar = await bcrypt.compare(password, userData.password);
 
             if (!passwordBenar) {
-                kirimRespon(res, 401, { error: 'Username atau password salah' });
+                kirimRespon(res, 401, { error: 'Invalid username or password' });
                 return;
             }
 
@@ -115,14 +115,71 @@ const requestListener = async function (req, res) {
             );
 
             kirimRespon(res, 200, { 
-                message: 'Login berhasil',
+                message: 'Login successful',
                 token: token,
                 username: username
             });
 
         } catch (error) {
             console.error('Error login:', error);
-            kirimRespon(res, 500, { error: 'Terjadi kesalahan pada server' });
+            kirimRespon(res, 500, { error: 'Server error occurred' });
+        }
+
+    } else if (req.url === '/auth/google' && req.method === 'POST') {
+        try {
+            const { idToken } = await bacaBody(req);
+            
+            if (!idToken) {
+                kirimRespon(res, 400, { error: 'ID token not found' });
+                return;
+            }
+
+            let decodedToken;
+            try {
+                decodedToken = await admin.auth().verifyIdToken(idToken);
+            } catch (error) {
+                console.error('❌ Firebase token verification failed:', error.message);
+                kirimRespon(res, 401, { error: 'Invalid Google token' });
+                return;
+            }
+
+            const email = decodedToken.email;
+            const displayName = decodedToken.name || email.split('@')[0];
+            const username = email.split('@')[0] + '_google';
+
+            const userRef = db.collection('users').doc(username);
+            const doc = await userRef.get();
+
+            if (!doc.exists) {
+                await userRef.set({
+                    username: username,
+                    email: email,
+                    displayName: displayName,
+                    authProvider: 'google',
+                    createdAt: admin.firestore.FieldValue.serverTimestamp()
+                });
+                
+                console.log(`✅ 新しいGoogleユーザーを作成: ${username} (${email})`);
+            } else {
+                console.log(`👤 既存のGoogleユーザーがログイン: ${username}`);
+            }
+
+            const token = jwt.sign(
+                { username: username },
+                process.env.JWT_SECRET,
+                { expiresIn: '24h' }
+            );
+
+            kirimRespon(res, 200, {
+                message: 'Google login successful',
+                token,
+                username,
+                displayName
+            });
+
+        } catch (error) {
+            console.error('❌ Google認証エラー:', error);
+            kirimRespon(res, 500, { error: 'Server error occurred' });
         }
 
     } else if (req.url === '/progress-kuis' && req.method === 'GET') {
@@ -130,7 +187,7 @@ const requestListener = async function (req, res) {
             const token = req.headers.authorization?.split(' ')[1];
             
             if (!token) {
-                kirimRespon(res, 401, { error: 'Token tidak ditemukan' });
+                kirimRespon(res, 401, { error: 'Token not found' });
                 return;
             }
 
@@ -141,7 +198,7 @@ const requestListener = async function (req, res) {
             const userDoc = await userRef.get();
 
             if (!userDoc.exists) {
-                kirimRespon(res, 404, { error: 'User tidak ditemukan' });
+                kirimRespon(res, 404, { error: 'User not found' });
                 return;
             }
 
@@ -167,7 +224,7 @@ const requestListener = async function (req, res) {
 
         } catch (error) {
             console.error('Error ambil progress:', error);
-            kirimRespon(res, 500, { error: 'Terjadi kesalahan pada server' });
+            kirimRespon(res, 500, { error: 'Server error occurred' });
         }
 
     } else if (req.url === '/progress-kuis' && req.method === 'POST') {
@@ -175,7 +232,7 @@ const requestListener = async function (req, res) {
             const token = req.headers.authorization?.split(' ')[1];
             
             if (!token) {
-                kirimRespon(res, 401, { error: 'Token tidak ditemukan' });
+                kirimRespon(res, 401, { error: 'Token not found' });
                 return;
             }
 
@@ -186,7 +243,7 @@ const requestListener = async function (req, res) {
             const { topik, skor, jawaban, selesai } = body;
 
             if (!topik) {
-                kirimRespon(res, 400, { error: 'Topik harus diisi' });
+                kirimRespon(res, 400, { error: 'Topic is required' });
                 return;
             }
 
@@ -201,15 +258,15 @@ const requestListener = async function (req, res) {
                 terakhirDikerjakan: new Date()
             }, { merge: true });
 
-            kirimRespon(res, 200, { message: 'Progress kuis berhasil disimpan' });
+            kirimRespon(res, 200, { message: 'Quiz progress saved successfully' });
 
         } catch (error) {
             console.error('Error simpan progress:', error);
-            kirimRespon(res, 500, { error: 'Terjadi kesalahan pada server' });
+            kirimRespon(res, 500, { error: 'Server error occurred' });
         }
 
     } else {
-        kirimRespon(res, 404, 'Halaman tidak ditemukan', 'text/plain');
+        kirimRespon(res, 404, 'Page not found', 'text/plain');
     }
 };
 

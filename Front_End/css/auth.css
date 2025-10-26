@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e9bc9 100%);
+    background: var(--neu-bg-light, #e0e5ec);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -20,9 +20,10 @@ body {
 }
 
 .auth-box {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    background: var(--neu-surface-light, #e0e5ec);
+    border-radius: 25px;
+    box-shadow: 12px 12px 24px rgba(163, 177, 198, 0.6),
+                -12px -12px 24px rgba(255, 255, 255, 0.5);
     overflow: hidden;
     animation: slideIn 0.5s ease-out;
 }
@@ -39,7 +40,7 @@ body {
 }
 
 .auth-header {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e9bc9 100%);
+    background: linear-gradient(135deg, var(--neu-primary-light, #667eea) 0%, var(--neu-primary-hover-light, #764ba2) 100%);
     color: white;
     padding: 30px;
     text-align: center;
@@ -60,7 +61,7 @@ body {
 }
 
 .auth-form h2 {
-    color: #333;
+    color: var(--neu-text-light, #2c3e50);
     margin-bottom: 30px;
     font-size: 28px;
     text-align: center;
@@ -72,7 +73,7 @@ body {
 
 .form-group label {
     display: block;
-    color: #555;
+    color: var(--neu-text-secondary-light, #5a6c7d);
     margin-bottom: 8px;
     font-weight: 500;
     font-size: 14px;
@@ -80,45 +81,55 @@ body {
 
 .form-group label i {
     margin-right: 5px;
-    color: #2a5298;
+    color: var(--neu-primary-light, #667eea);
 }
 
 .form-group input {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
+    border: none;
+    background: var(--neu-surface-light, #e0e5ec);
+    box-shadow: inset 4px 4px 8px rgba(163, 177, 198, 0.5),
+                inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+    border-radius: 12px;
     font-size: 15px;
+    color: var(--neu-text-light, #2c3e50);
     transition: all 0.3s ease;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #2a5298;
-    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+    box-shadow: inset 3px 3px 6px rgba(163, 177, 198, 0.4),
+                inset -3px -3px 6px rgba(255, 255, 255, 0.6),
+                0 0 0 3px rgba(102, 126, 234, 0.2);
 }
 
 .btn-primary {
     width: 100%;
     padding: 14px;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e9bc9 100%);
+    background: linear-gradient(135deg, var(--neu-primary-light, #667eea) 0%, var(--neu-primary-hover-light, #764ba2) 100%);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    box-shadow: 6px 6px 12px rgba(102, 126, 234, 0.4),
+                -6px -6px 12px rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     margin-top: 10px;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(42, 82, 152, 0.4);
+    box-shadow: 8px 8px 16px rgba(102, 126, 234, 0.5),
+                -8px -8px 16px rgba(255, 255, 255, 0.15);
 }
 
 .btn-primary:active {
     transform: translateY(0);
+    box-shadow: inset 4px 4px 8px rgba(102, 126, 234, 0.4),
+                inset -4px -4px 8px rgba(118, 75, 162, 0.2);
 }
 
 .btn-primary i {
@@ -128,19 +139,19 @@ body {
 .switch-form {
     text-align: center;
     margin-top: 20px;
-    color: #666;
+    color: var(--neu-text-secondary-light, #5a6c7d);
     font-size: 14px;
 }
 
 .switch-form a {
-    color: #2a5298;
+    color: var(--neu-primary-light, #667eea);
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
 }
 
 .switch-form a:hover {
-    color: #1e3c72;
+    color: var(--neu-primary-hover-light, #764ba2);
     text-decoration: underline;
 }
 
@@ -216,6 +227,75 @@ body {
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 25px 0;
+    color: var(--neu-text-secondary-light, #5a6c7d);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(163, 177, 198, 0.3);
+}
+
+.auth-divider span {
+    padding: 0 15px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 12px;
+    background: white;
+    color: #444;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px rgba(163, 177, 198, 0.5),
+                -6px -6px 12px rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-google:hover {
+    transform: translateY(-2px);
+    box-shadow: 8px 8px 16px rgba(163, 177, 198, 0.6),
+                -8px -8px 16px rgba(255, 255, 255, 0.8);
+}
+
+.btn-google:active {
+    transform: translateY(0);
+}
+
+.btn-google i {
+    color: #4285f4;
+    font-size: 18px;
+}
+
+body.dark-mode .btn-google {
+    background: var(--neu-surface-dark);
+    color: var(--neu-text-dark);
+    border-color: #444;
+    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.5),
+                -6px -6px 12px rgba(42, 46, 65, 0.3);
+}
+
+body.dark-mode .btn-google:hover {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.6),
+                -8px -8px 16px rgba(42, 46, 65, 0.4);
 }
 
 @media (max-width: 480px) {

@@ -2,3 +2,13 @@ Back_End/.env
 Back_End/serviceAccountKey.json.json
 Back_End/node_modules/
 .DS_Store
+
+# Development only files
+Back_End/server-local.js
+
+
+Front_End/node_modules/
+Front_End/package.json
+Front_End/package-lock.json
+Front_End/test-connection.html
+Front_End/js/firebase-config.js

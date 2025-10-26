@@ -1,10 +1,13 @@
-const API_URL = 'https://project-uts-pawm-production.up.railway.app';
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? 'http://localhost:3001'
+    : 'https://project-uts-pawm-production.up.railway.app';
 
 const ModulKuis = {
     topikSekarang: 'glb',
     indexSoal: 0,
     jawabanUser: [],
     progress: {},
+    indexTertinggi: 0, // 最も進んだ問題のインデックスを追跡
     
     mulai() {
         this.muatProgress();
@@ -96,6 +99,7 @@ const ModulKuis = {
     mulaiKuis(topik) {
         this.topikSekarang = topik;
         this.indexSoal = 0;
+        this.indexTertinggi = 0; // リセット
         this.jawabanUser = new Array(quizData[topik].length).fill(null);
         
         document.getElementById('quiz-menu').hidden = true;
@@ -112,8 +116,9 @@ const ModulKuis = {
         let opsiHTML = '';
         soal.options.forEach((opsi, i) => {
             const checked = this.jawabanUser[this.indexSoal] === opsi ? 'checked' : '';
+            const selectedClass = this.jawabanUser[this.indexSoal] === opsi ? 'selected' : '';
             opsiHTML += `
-                <div>
+                <div class="${selectedClass}">
                     <input type="radio" name="option" id="opt${i}" value="${opsi}" ${checked}>
                     <label for="opt${i}">${opsi}</label>
                 </div>
@@ -147,9 +152,30 @@ const ModulKuis = {
     },
 
     simpanJawaban(jawaban) {
+        const isAnsweringForward = this.indexSoal >= this.indexTertinggi;
+        
         this.jawabanUser[this.indexSoal] = jawaban;
         const navBox = document.querySelector(`[data-index="${this.indexSoal}"]`);
         if (navBox) navBox.classList.add('terjawab');
+        
+        // 最も進んだインデックスを更新
+        if (this.indexSoal > this.indexTertinggi) {
+            this.indexTertinggi = this.indexSoal;
+        }
+        
+        // 前方に進んでいる場合のみ自動で次へ
+        if (isAnsweringForward) {
+            const soalList = quizData[this.topikSekarang];
+            const indexBerikutnya = this.indexSoal + 1;
+            
+            if (indexBerikutnya < soalList.length) {
+                // 0.5秒待ってから次の問題へ
+                setTimeout(() => {
+                    this.indexSoal = indexBerikutnya;
+                    this.tampilkanSoal();
+                }, 500);
+            }
+        }
     },
 
     async cekJawaban() {

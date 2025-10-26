@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentView = 'welcome';
     const views = document.querySelectorAll('.view');
     const navLinks = document.querySelectorAll('.nav-link');
+    const featureCards = document.querySelectorAll('.feature-card');
     
     const quizCardContainer = document.getElementById('quiz-card-container');
     const quizMenu = document.getElementById('quiz-menu');
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ModulKuis.mulai();
         
         navLinks.forEach(link => link.addEventListener('click', handleNavClick));
+        featureCards.forEach(card => card.addEventListener('click', handleFeatureCardClick));
         quizCardContainer.addEventListener('click', handleQuizCardClick);
         quizInterface.addEventListener('click', handleQuizInterfaceClick);
 
@@ -86,6 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleNavClick(e) {
         e.preventDefault();
         navigateTo(this.dataset.view);
+    }
+    
+    function handleFeatureCardClick(e) {
+        const card = e.currentTarget;
+        const viewId = card.dataset.view;
+        if (viewId) {
+            navigateTo(viewId);
+        }
     }
     
     function handleQuizCardClick(e) {

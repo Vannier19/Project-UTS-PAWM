@@ -2,6 +2,8 @@
 
 Created By:
 Stevan Einer Bonagabe / 18223028
+Ryota Takenaka / 18225901
+
 
 ## How to Run
 
@@ -39,14 +41,16 @@ Front_End/
 ├── login.html             # Login/Register page
 ├── index.html             # Main application (requires authentication)
 ├── css/                   # Stylesheet files
-│   ├── auth.css
-│   ├── main.css
-│   ├── sidebar.css
-│   ├── content.css
-│   ├── lab.css
-│   ├── kuis.css
+│   ├── auth.css           # Login/register styles (updated for neumorphism)
+│   ├── main.css           # Base application styles
+│   ├── sidebar.css        # Sidebar navigation
+│   ├── content.css        # Content area styles
+│   ├── lab.css            # Virtual laboratory styles
+│   ├── kuis.css           # Quiz system styles
 │   ├── materi-enhancement.css
-│   └── dark-mode-fix.css
+│   ├── modal.css          # Modal dialog styles
+│   ├── dark-mode-fix.css  # Dark mode adjustments
+│   └── neumorphism.css    # 🆕 Neumorphism design system (UTS)
 ├── js/                    # JavaScript files
 │   ├── auth.js            # Authentication logic
 │   ├── main.js            # Main application logic
@@ -59,6 +63,11 @@ Front_End/
     ├── car.png
     ├── rock.png
     └── parabola.png
+
+UTS_Documentation/         # 🆕 UTS Report Documentation
+├── 01_Design_Implementation.md
+├── SCREENSHOT_GUIDE.md
+└── TESTING_GUIDE.md
 ```
 
 ## API Endpoints

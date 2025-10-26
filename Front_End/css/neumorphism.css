@@ -1,0 +1,838 @@
+:root {
+    /* Neumorphism Light Mode Colors */
+    --neu-bg-light: #e0e5ec;
+    --neu-surface-light: #e0e5ec;
+    --neu-text-light: #2c3e50;
+    --neu-text-secondary-light: #5a6c7d;
+    --neu-primary-light: #667eea;
+    --neu-primary-hover-light: #764ba2;
+    --neu-success-light: #48bb78;
+    --neu-danger-light: #f56565;
+    
+    /* Neumorphism Shadows - Light Mode */
+    --neu-shadow-light: 9px 9px 16px rgba(163, 177, 198, 0.6), 
+                        -9px -9px 16px rgba(255, 255, 255, 0.5);
+    --neu-shadow-inset-light: inset 6px 6px 10px rgba(163, 177, 198, 0.5),
+                              inset -6px -6px 10px rgba(255, 255, 255, 0.7);
+    --neu-shadow-hover-light: 13px 13px 20px rgba(163, 177, 198, 0.7),
+                              -13px -13px 20px rgba(255, 255, 255, 0.6);
+    --neu-shadow-active-light: inset 4px 4px 8px rgba(163, 177, 198, 0.5),
+                               inset -4px -4px 8px rgba(255, 255, 255, 0.5);
+}
+
+body.dark-mode {
+    /* Neumorphism Dark Mode Colors */
+    --neu-bg-dark: #1a1d29;
+    --neu-surface-dark: #1e2130;
+    --neu-text-dark: #e4e9f0;
+    --neu-text-secondary-dark: #a0a8b8;
+    --neu-primary-dark: #7c8ff5;
+    --neu-primary-hover-dark: #9ca8ff;
+    --neu-success-dark: #68d391;
+    --neu-danger-dark: #fc8181;
+    
+    /* Neumorphism Shadows - Dark Mode */
+    --neu-shadow-dark: 8px 8px 15px rgba(0, 0, 0, 0.5),
+                       -8px -8px 15px rgba(42, 46, 65, 0.3);
+    --neu-shadow-inset-dark: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+                             inset -5px -5px 10px rgba(42, 46, 65, 0.2);
+    --neu-shadow-hover-dark: 12px 12px 20px rgba(0, 0, 0, 0.6),
+                             -12px -12px 20px rgba(42, 46, 65, 0.4);
+    --neu-shadow-active-dark: inset 4px 4px 8px rgba(0, 0, 0, 0.6),
+                              inset -4px -4px 8px rgba(42, 46, 65, 0.2);
+}
+
+body {
+    background: var(--neu-bg-light);
+    transition: background 0.3s ease;
+}
+
+body.dark-mode {
+    background: var(--neu-bg-dark);
+}
+
+header {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 0 0 20px 20px;
+}
+
+body.dark-mode header {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+header h1 {
+    color: var(--neu-text-light);
+}
+
+body.dark-mode header h1 {
+    color: var(--neu-text-dark);
+}
+
+.user-info {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 25px;
+    padding: 0.6rem 1.2rem;
+}
+
+body.dark-mode .user-info {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.user-info i.fa-user-circle {
+    color: var(--neu-primary-light);
+}
+
+body.dark-mode .user-info i.fa-user-circle {
+    color: var(--neu-primary-dark);
+}
+
+.user-info span {
+    color: var(--neu-text-light);
+}
+
+body.dark-mode .user-info span {
+    color: var(--neu-text-dark);
+}
+
+/* Logout Button */
+.logout-btn {
+    background: var(--neu-danger-light);
+    box-shadow: 5px 5px 10px rgba(245, 101, 101, 0.3),
+                -5px -5px 10px rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 12px;
+}
+
+.logout-btn:hover {
+    box-shadow: 7px 7px 14px rgba(245, 101, 101, 0.4),
+                -7px -7px 14px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.logout-btn:active {
+    box-shadow: inset 3px 3px 6px rgba(220, 53, 69, 0.5),
+                inset -3px -3px 6px rgba(255, 120, 120, 0.2);
+    transform: translateY(0);
+}
+
+body.dark-mode .logout-btn {
+    background: var(--neu-danger-dark);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4),
+                -5px -5px 10px rgba(42, 46, 65, 0.1);
+}
+
+/* Theme Switch - Neumorphism */
+.theme-switch .slider {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+}
+
+body.dark-mode .theme-switch .slider {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+.theme-switch .slider:before {
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .theme-switch .slider:before {
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+}
+
+.sidebar {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 20px;
+}
+
+body.dark-mode .sidebar {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.sidebar h3 {
+    color: var(--neu-text-light);
+    border-bottom: 3px solid var(--neu-primary-light);
+}
+
+body.dark-mode .sidebar h3 {
+    color: var(--neu-text-dark);
+    border-bottom: 3px solid var(--neu-primary-dark);
+}
+
+.sidebar nav a {
+    background: var(--neu-surface-light);
+    box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.4),
+                -5px -5px 10px rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    color: var(--neu-text-light);
+    margin-bottom: 0.8rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode .sidebar nav a {
+    background: var(--neu-surface-dark);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4),
+                -5px -5px 10px rgba(42, 46, 65, 0.2);
+    color: var(--neu-text-dark);
+}
+
+.sidebar nav a:hover {
+    box-shadow: var(--neu-shadow-hover-light);
+    transform: translateY(-2px);
+    background: var(--neu-surface-light);
+    color: var(--neu-primary-light);
+}
+
+body.dark-mode .sidebar nav a:hover {
+    box-shadow: var(--neu-shadow-hover-dark);
+    background: var(--neu-surface-dark);
+    color: var(--neu-primary-dark);
+}
+
+.sidebar nav a.active {
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    box-shadow: inset 3px 3px 6px rgba(102, 126, 234, 0.4),
+                inset -3px -3px 6px rgba(118, 75, 162, 0.2);
+    color: white;
+    transform: scale(0.98);
+}
+
+body.dark-mode .sidebar nav a.active {
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+    box-shadow: inset 3px 3px 6px rgba(124, 143, 245, 0.3),
+                inset -3px -3px 6px rgba(156, 168, 255, 0.2);
+}
+
+.feature-card {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 20px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    user-select: none;
+}
+
+body.dark-mode .feature-card {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.feature-card:hover {
+    box-shadow: var(--neu-shadow-hover-light);
+    transform: translateY(-8px) scale(1.02);
+}
+
+body.dark-mode .feature-card:hover {
+    box-shadow: var(--neu-shadow-hover-dark);
+}
+
+.feature-card:active {
+    transform: translateY(-4px) scale(1.01);
+    transition: all 0.1s ease;
+}
+
+.feature-card i {
+    color: var(--neu-primary-light);
+    filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.3));
+}
+
+body.dark-mode .feature-card i {
+    color: var(--neu-primary-dark);
+    filter: drop-shadow(0 4px 8px rgba(124, 143, 245, 0.3));
+}
+
+.feature-card h3 {
+    color: var(--neu-text-light);
+}
+
+body.dark-mode .feature-card h3 {
+    color: var(--neu-text-dark);
+}
+
+.feature-card p {
+    color: var(--neu-text-secondary-light);
+}
+
+body.dark-mode .feature-card p {
+    color: var(--neu-text-secondary-dark);
+}
+
+.btn-primary,
+.btn-submit,
+.btn-start,
+.btn-pause,
+.btn-reset {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 15px;
+    color: var(--neu-text-light);
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode .btn-primary,
+body.dark-mode .btn-submit,
+body.dark-mode .btn-start,
+body.dark-mode .btn-pause,
+body.dark-mode .btn-reset {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+    color: var(--neu-text-dark);
+}
+
+.btn-primary:hover,
+.btn-submit:hover,
+.btn-start:hover {
+    box-shadow: var(--neu-shadow-hover-light);
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    color: white;
+}
+
+body.dark-mode .btn-primary:hover,
+body.dark-mode .btn-submit:hover,
+body.dark-mode .btn-start:hover {
+    box-shadow: var(--neu-shadow-hover-dark);
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+}
+
+.btn-primary:active,
+.btn-submit:active,
+.btn-start:active {
+    box-shadow: var(--neu-shadow-active-light);
+    transform: translateY(0);
+}
+
+body.dark-mode .btn-primary:active,
+body.dark-mode .btn-submit:active,
+body.dark-mode .btn-start:active {
+    box-shadow: var(--neu-shadow-active-dark);
+}
+
+/* Pause Button - Warning Color */
+.btn-pause {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+}
+
+.btn-pause:hover {
+    box-shadow: 7px 7px 14px rgba(251, 191, 36, 0.4),
+                -7px -7px 14px rgba(255, 255, 255, 0.2);
+}
+
+/* Reset Button */
+.btn-reset:hover {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-hover-light);
+}
+
+body.dark-mode .btn-reset:hover {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-hover-dark);
+}
+
+.topic-select,
+select {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+    border: none;
+    border-radius: 12px;
+    color: var(--neu-text-light);
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .topic-select,
+body.dark-mode select {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+    color: var(--neu-text-dark);
+}
+
+.topic-select:focus,
+select:focus {
+    outline: none;
+    box-shadow: var(--neu-shadow-light);
+}
+
+body.dark-mode .topic-select:focus,
+body.dark-mode select:focus {
+    box-shadow: var(--neu-shadow-dark);
+}
+
+/* Range Sliders */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+    border-radius: 10px;
+    outline: none;
+}
+
+body.dark-mode input[type="range"] {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2),
+                -3px -3px 6px rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode input[type="range"]::-webkit-slider-thumb {
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3),
+                -4px -4px 8px rgba(255, 255, 255, 0.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2),
+                -3px -3px 6px rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+.content-area {
+    background: transparent;
+}
+
+.view {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+body.dark-mode .view {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.modal-box {
+    background: var(--neu-surface-light);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 25px;
+}
+
+body.dark-mode .modal-box {
+    background: var(--neu-surface-dark);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    border-radius: 25px 25px 0 0;
+}
+
+body.dark-mode .modal-header {
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+}
+
+.btn-cancel {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    color: var(--neu-text-light);
+}
+
+body.dark-mode .btn-cancel {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+    color: var(--neu-text-dark);
+}
+
+.btn-cancel:hover {
+    box-shadow: var(--neu-shadow-hover-light);
+    transform: translateY(-2px);
+}
+
+body.dark-mode .btn-cancel:hover {
+    box-shadow: var(--neu-shadow-hover-dark);
+}
+
+.btn-confirm {
+    background: var(--neu-danger-light);
+    box-shadow: 5px 5px 10px rgba(245, 101, 101, 0.3),
+                -5px -5px 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .btn-confirm {
+    background: var(--neu-danger-dark);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4),
+                -5px -5px 10px rgba(42, 46, 65, 0.1);
+}
+
+.btn-confirm:hover {
+    box-shadow: 7px 7px 14px rgba(245, 101, 101, 0.4),
+                -7px -7px 14px rgba(255, 255, 255, 0.2);
+}
+
+.control-group {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+body.dark-mode .control-group {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.control-group label {
+    color: var(--neu-text-light);
+    font-weight: 600;
+}
+
+body.dark-mode .control-group label {
+    color: var(--neu-text-dark);
+}
+
+.control-group span {
+    color: var(--neu-primary-light);
+    font-weight: 700;
+}
+
+body.dark-mode .control-group span {
+    color: var(--neu-primary-dark);
+}
+
+/* Analysis Panel */
+.analysis-panel {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 20px;
+    padding: 2rem;
+}
+
+body.dark-mode .analysis-panel {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.analysis-panel h4 {
+    color: var(--neu-text-light);
+    border-bottom: 3px solid var(--neu-primary-light);
+    padding-bottom: 0.5rem;
+}
+
+body.dark-mode .analysis-panel h4 {
+    color: var(--neu-text-dark);
+    border-bottom: 3px solid var(--neu-primary-dark);
+}
+
+.data-item {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+body.dark-mode .data-item {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+.data-item label {
+    color: var(--neu-text-secondary-light);
+}
+
+body.dark-mode .data-item label {
+    color: var(--neu-text-secondary-dark);
+}
+
+.data-item span {
+    color: var(--neu-primary-light);
+    font-weight: 700;
+}
+
+body.dark-mode .data-item span {
+    color: var(--neu-primary-dark);
+}
+
+#physics-canvas {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+    border-radius: 20px;
+    border: none;
+}
+
+body.dark-mode #physics-canvas {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+.quiz-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.quiz-card {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border: none;
+    border-radius: 20px;
+    padding: 2rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode .quiz-card {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.quiz-card:hover {
+    box-shadow: var(--neu-shadow-hover-light);
+    transform: translateY(-5px) scale(1.02);
+}
+
+body.dark-mode .quiz-card:hover {
+    box-shadow: var(--neu-shadow-hover-dark);
+}
+
+/* Quiz Results Box - Neumorphism Style */
+.kotak-hasil {
+    background: var(--neu-surface-light) !important;
+    box-shadow: var(--neu-shadow-light) !important;
+    color: var(--neu-text-light) !important;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+body.dark-mode .kotak-hasil {
+    background: var(--neu-surface-dark) !important;
+    box-shadow: var(--neu-shadow-dark) !important;
+    color: var(--neu-text-dark) !important;
+}
+
+.kotak-hasil h3 {
+    color: var(--neu-primary-light) !important;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+body.dark-mode .kotak-hasil h3 {
+    color: var(--neu-primary-dark) !important;
+}
+
+.kotak-hasil p {
+    color: var(--neu-text-light) !important;
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+}
+
+body.dark-mode .kotak-hasil p {
+    color: var(--neu-text-dark) !important;
+}
+
+.kotak-hasil p strong {
+    color: var(--neu-primary-light);
+    font-size: 1.3rem;
+}
+
+body.dark-mode .kotak-hasil p strong {
+    color: var(--neu-primary-dark);
+}
+
+.pesan-hasil {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: bold;
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-inset-light);
+}
+
+body.dark-mode .pesan-hasil {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+.pesan-hasil.bagus {
+    color: var(--neu-success-light);
+    border-left: 4px solid var(--neu-success-light);
+}
+
+body.dark-mode .pesan-hasil.bagus {
+    color: var(--neu-success-dark);
+    border-left: 4px solid var(--neu-success-dark);
+}
+
+.pesan-hasil.kurang {
+    color: #f59e0b;
+    border-left: 4px solid #f59e0b;
+}
+
+body.dark-mode .pesan-hasil.kurang {
+    color: #fbbf24;
+    border-left: 4px solid #fbbf24;
+}
+
+/* Quiz Submit Button */
+#quiz-submit-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, var(--neu-primary-light), var(--neu-primary-hover-light));
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 6px 6px 12px rgba(102, 126, 234, 0.4),
+                -6px -6px 12px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark-mode #quiz-submit-btn {
+    background: linear-gradient(135deg, var(--neu-primary-dark), var(--neu-primary-hover-dark));
+}
+
+#quiz-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 8px 8px 16px rgba(102, 126, 234, 0.5),
+                -8px -8px 16px rgba(255, 255, 255, 0.15);
+}
+
+#quiz-submit-btn:active {
+    transform: translateY(0);
+    box-shadow: inset 4px 4px 8px rgba(102, 126, 234, 0.4),
+                inset -4px -4px 8px rgba(118, 75, 162, 0.2);
+}
+
+h2, h3, h4 {
+    color: var(--neu-text-light);
+}
+
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4 {
+    color: var(--neu-text-dark);
+}
+
+p {
+    color: var(--neu-text-secondary-light);
+}
+
+body.dark-mode p {
+    color: var(--neu-text-secondary-dark);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.4),
+                    -5px -5px 10px rgba(255, 255, 255, 0.3);
+    }
+    
+    body.dark-mode .sidebar {
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4),
+                    -5px -5px 10px rgba(42, 46, 65, 0.2);
+    }
+    
+    .feature-card,
+    .quiz-card {
+        box-shadow: 6px 6px 12px rgba(163, 177, 198, 0.5),
+                    -6px -6px 12px rgba(255, 255, 255, 0.4);
+    }
+    
+    body.dark-mode .feature-card,
+    body.dark-mode .quiz-card {
+        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.4),
+                    -6px -6px 12px rgba(42, 46, 65, 0.2);
+    }
+}
+/* Focus states for keyboard navigation */
+a:focus,
+button:focus,
+input:focus,
+select:focus {
+    outline: 3px solid var(--neu-primary-light);
+    outline-offset: 3px;
+}
+
+body.dark-mode a:focus,
+body.dark-mode button:focus,
+body.dark-mode input:focus,
+body.dark-mode select:focus {
+    outline-color: var(--neu-primary-dark);
+}
+
+@keyframes neuPulse {
+    0%, 100% {
+        box-shadow: var(--neu-shadow-light);
+    }
+    50% {
+        box-shadow: var(--neu-shadow-hover-light);
+    }
+}
+
+.neu-pulse {
+    animation: neuPulse 2s ease-in-out infinite;
+}
+
+.neu-flat {
+    background: var(--neu-surface-light);
+    box-shadow: var(--neu-shadow-light);
+    border-radius: 15px;
+}
+
+body.dark-mode .neu-flat {
+    background: var(--neu-surface-dark);
+    box-shadow: var(--neu-shadow-dark);
+}
+
+.neu-pressed {
+    box-shadow: var(--neu-shadow-inset-light);
+}
+
+body.dark-mode .neu-pressed {
+    box-shadow: var(--neu-shadow-inset-dark);
+}
+
+.neu-raised {
+    box-shadow: var(--neu-shadow-hover-light);
+}
+
+body.dark-mode .neu-raised {
+    box-shadow: var(--neu-shadow-hover-dark);
+}

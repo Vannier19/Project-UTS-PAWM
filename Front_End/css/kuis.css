@@ -108,11 +108,31 @@ body.dark-mode .info-skor {
     margin-bottom: 0.75rem;
     padding: 0.5rem;
     border-radius: 5px;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .options-list div:hover {
     background-color: var(--hover-color, #f5f5f5);
+    transform: translateX(5px);
+}
+
+.options-list div.selected {
+    background-color: rgba(102, 126, 234, 0.1);
+    border-left: 3px solid var(--primary-color);
+    animation: selectPulse 0.4s ease;
+}
+
+@keyframes selectPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .options-list input[type="radio"] {

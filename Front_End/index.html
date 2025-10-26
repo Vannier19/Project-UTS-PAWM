@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="css/kuis.css">
     <link rel="stylesheet" href="css/dark-mode-fix.css">
     <link rel="stylesheet" href="css/modal.css">
+    <!-- Neumorphism Design System - UTS UI/UX Enhancement -->
+    <link rel="stylesheet" href="css/neumorphism.css">
 </head>
 <body>
     <div id="logout-modal" class="modal-overlay" style="display: none;">
@@ -75,19 +77,19 @@
                 <p class="subtitle">An interactive platform to learn basic Physics concepts through simulations and challenging quizzes.</p>
 
                 <div class="features-grid">
-                    <div class="feature-card">
+                    <div class="feature-card" data-view="materi" style="cursor: pointer;">
                         <i class="fas fa-book-open"></i>
                         <h3>Interactive Materials</h3>
                         <p>Learn summaries and important formulas from each basic Physics topic, from Uniform Linear Motion to Projectile Motion.</p>
                     </div>
 
-                    <div class="feature-card">
+                    <div class="feature-card" data-view="lab" style="cursor: pointer;">
                         <i class="fas fa-flask"></i>
                         <h3>Virtual Simulation</h3>
                         <p>Experience physics concepts directly with interactive simulations. Change variables like velocity and angle, then see the results in real-time!</p>
                     </div>
 
-                    <div class="feature-card">
+                    <div class="feature-card" data-view="kuis" style="cursor: pointer;">
                         <i class="fas fa-question-circle"></i>
                         <h3>Interactive Quiz</h3>
                         <p>Test your understanding by taking quizzes for each topic. View your scores and track your learning progress.</p>
