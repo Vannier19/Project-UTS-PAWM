@@ -9,9 +9,8 @@ Ryota Takenaka / 18225901
 
 ### 1. Setup Environment Files (IMPORTANT!)
 
-Create a `.env` file in the `Back_End/` folder (key is in the report)
-
-Create a `serviceAccountKey.json.json` file in the `Back_End/` folder (key is in the report)
+Create a `.env` file in the `Back_End/` folder based on `.env.example`
+(See `.env.example` for required environment variables)
 
 
 ### 2. Install Dependencies
@@ -32,10 +31,9 @@ Server will run at: `http://localhost:3001`
 
 ```
 Back_End/
-├── server.js              # Main server file
+├── server.js              # Production server with Firebase
 ├── package.json           # Dependencies
-├── .env                   # JWT secret key (NOT in Git - create manually)
-└── serviceAccountKey.json.json  # Firebase credentials (NOT in Git - create manually)
+└── .env.example           # Environment template
 
 Front_End/
 ├── login.html             # Login/Register page
@@ -50,7 +48,7 @@ Front_End/
 │   ├── materi-enhancement.css
 │   ├── modal.css          # Modal dialog styles
 │   ├── dark-mode-fix.css  # Dark mode adjustments
-│   └── neumorphism.css    # 🆕 Neumorphism design system (UTS)
+│   └── neumorphism.css    # Neumorphism design system (UTS)
 ├── js/                    # JavaScript files
 │   ├── auth.js            # Authentication logic
 │   ├── main.js            # Main application logic
@@ -63,11 +61,6 @@ Front_End/
     ├── car.png
     ├── rock.png
     └── parabola.png
-
-UTS_Documentation/         # 🆕 UTS Report Documentation
-├── 01_Design_Implementation.md
-├── SCREENSHOT_GUIDE.md
-└── TESTING_GUIDE.md
 ```
 
 ## API Endpoints
@@ -93,6 +86,14 @@ User login - returns JWT token
 }
 ```
 
+### `POST /auth/google`
+Google OAuth authentication - returns JWT token
+```json
+{
+  "idToken": "Firebase ID token from Google Sign-In"
+}
+```
+
 ### `GET /progress-kuis`
 Retrieve user's quiz progress (requires token)
 ```
@@ -111,6 +112,12 @@ Save user's quiz progress (requires token)
 ```
 
 ## Application Features
+
+### 🔐 Authentication
+- Username/Password registration and login
+- Google OAuth authentication
+- JWT token-based session management
+- Auto-redirect to login if not authenticated
 
 ### 🎓 Learning Materials
 - 4 Physics Topics: GLB, GLBB, Vertical Motion, Projectile Motion
@@ -153,9 +160,12 @@ Save user's quiz progress (requires token)
 - Login again
 
 **"Firebase Error" or "Cannot connect to Firebase"**
-- Make sure `.env` and `serviceAccountKey.json.json` files exist in `Back_End/` folder
-- Check file contents are correct (copy from setup instructions)
-- Verify Firebase project is active
+- Verify Firebase project is active and environment variables are set correctly
+- Check authorized domains in Firebase Console (Authentication → Settings → Authorized domains)
+
+**"auth/unauthorized-domain" when using Google login**
+- Add your domain to Firebase Console → Authentication → Settings → Authorized domains
+- For production: Add your Vercel/Railway domain
 
 **"Lab images have white background"**
 - Make sure PNG files are actually transparent
