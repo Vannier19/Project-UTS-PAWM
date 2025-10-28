@@ -118,5 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    const retryQuizBtn = document.getElementById('retry-quiz-btn');
+    const closeResultBtn = document.getElementById('close-result-btn');
+    
+    if (retryQuizBtn) {
+        retryQuizBtn.addEventListener('click', () => {
+            ModulKuis.retryQuiz();
+        });
+    }
+    
+    if (closeResultBtn) {
+        closeResultBtn.addEventListener('click', () => {
+            ModulKuis.closeResultModal();
+        });
+    }
+
     init();
 });

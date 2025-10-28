@@ -7,7 +7,7 @@ const ModulKuis = {
     indexSoal: 0,
     jawabanUser: [],
     progress: {},
-    indexTertinggi: 0, // 最も進んだ問題のインデックスを追跡
+    indexTertinggi: 0,
     
     mulai() {
         this.muatProgress();
@@ -158,7 +158,6 @@ const ModulKuis = {
         const navBox = document.querySelector(`[data-index="${this.indexSoal}"]`);
         if (navBox) navBox.classList.add('terjawab');
         
-        // 最も進んだインデックスを更新
         if (this.indexSoal > this.indexTertinggi) {
             this.indexTertinggi = this.indexSoal;
         }
@@ -185,22 +184,41 @@ const ModulKuis = {
         this.jawabanUser.forEach((jawaban, i) => {
             if (jawaban === soalList[i].answer) benar++;
         });
-        
+
         const total = soalList.length;
         const persen = Math.round((benar / total) * 100);
         
-        const hasil = persen >= 70 ? 
-            '<p class="pesan-hasil bagus">Great! You passed!</p>' : 
-            '<p class="pesan-hasil kurang">Keep learning! You can try again.</p>';
-
-        document.getElementById('quiz-results').innerHTML = `
-            <div class="kotak-hasil">
-                <h3>Quiz Completed!</h3>
-                <p>Your Score: <strong>${benar}/${total}</strong> (${persen}%)</p>
-                ${hasil}
-            </div>
-        `;
-
         await this.simpanProgress(this.topikSekarang, benar, this.jawabanUser, true);
+        
+        this.showResultModal(benar, total, persen);
+    },
+
+    showResultModal(benar, total, persen) {
+        const modal = document.getElementById('quiz-result-modal');
+        const scoreDiv = document.getElementById('result-score');
+        const messageDiv = document.getElementById('result-message');
+        
+        scoreDiv.innerHTML = `${benar}/${total} <small style="font-size: 0.5em; color: #666;">(${persen}%)</small>`;
+        
+        if (persen >= 70) {
+            messageDiv.innerHTML = '<p class="pesan-hasil bagus">🎉 Great! You passed!</p>';
+        } else {
+            messageDiv.innerHTML = '<p class="pesan-hasil kurang">📚 Keep learning! You can try again.</p>';
+        }
+        
+        modal.style.display = 'flex';
+    },
+
+    closeResultModal() {
+        const modal = document.getElementById('quiz-result-modal');
+        modal.style.display = 'none';
+        this.tampilkanDaftarKuis();
+    },
+
+    retryQuiz() {
+        const modal = document.getElementById('quiz-result-modal');
+        modal.style.display = 'none';
+        this.mulaiKuis(this.topikSekarang);
     }
 };
+
