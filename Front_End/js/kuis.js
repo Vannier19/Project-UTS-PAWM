@@ -1,7 +1,3 @@
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:3001'
-    : 'https://project-uts-pawm-production.up.railway.app';
-
 const ModulKuis = {
     topikSekarang: 'glb',
     indexSoal: 0,

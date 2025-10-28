@@ -1,7 +1,3 @@
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://localhost:3001'
-    : 'https://project-uts-pawm-production.up.railway.app';
-
 const loginFormContainer = document.getElementById('login-form');
 const registerFormContainer = document.getElementById('register-form');
 const loginForm = document.getElementById('loginForm');
