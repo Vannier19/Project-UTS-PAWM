@@ -10,10 +10,10 @@ const ModulKuis = {
     },
 
     async muatProgress() {
-        try {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+        const token = localStorage.getItem('token');
+        if (!token) return;
 
+        try {
             const response = await fetch(`${API_URL}/progress-kuis`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -21,13 +21,23 @@ const ModulKuis = {
                 }
             });
 
+            if (response.status === 401) {
+                const data = await response.json();
+                if (data.expired || data.invalid) {
+                    alert('Session expired. Please login again.');
+                    localStorage.clear();
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
+
             if (response.ok) {
                 const data = await response.json();
                 this.progress = data.progressKuis || {};
                 this.perbaruiTampilanMenu();
             }
         } catch (error) {
-            console.error('Gagal memuat progress:', error);
+            console.error('Error loading progress:', error);
         }
     },
 

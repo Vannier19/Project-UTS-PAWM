@@ -40,25 +40,24 @@ loginForm.addEventListener('submit', async (e) => {
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
         
         const data = await response.json();
         
         if (response.ok) {
+            localStorage.clear(); // clear old tokens
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.username);
-            localStorage.setItem('userData', JSON.stringify({ username: data.username, password: password }));
+            localStorage.setItem('userData', JSON.stringify({ username: data.username, password }));
             window.location.href = 'index.html';
         } else {
             showError(loginError, data.error || 'Login failed');
         }
     } catch (error) {
         console.error('Login error:', error);
-        showError(loginError, 'Cannot connect to server. Please make sure the backend is running.');
+        showError(loginError, 'Cannot connect to server');
     } finally {
         submitBtn.classList.remove('loading');
     }
@@ -98,9 +97,7 @@ registerForm.addEventListener('submit', async (e) => {
     try {
         const response = await fetch(`${API_URL}/register`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username, password })
         });
         
@@ -109,15 +106,13 @@ registerForm.addEventListener('submit', async (e) => {
         if (response.ok) {
             showSuccess(registerSuccess, 'Registration successful! Please login.');
             registerForm.reset();
-            setTimeout(() => {
-                showLoginLink.click();
-            }, 2000);
+            setTimeout(() => showLoginLink.click(), 2000);
         } else {
             showError(registerError, data.error || 'Registration failed');
         }
     } catch (error) {
         console.error('Register error:', error);
-        showError(registerError, 'Cannot connect to server. Please make sure the backend is running.');
+        showError(registerError, 'Cannot connect to server');
     } finally {
         submitBtn.classList.remove('loading');
     }

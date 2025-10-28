@@ -7,23 +7,23 @@ Ryota Takenaka / 18225901
 
 ## How to Run
 
-### 1. Setup Environment Files (IMPORTANT!)
+### 1. Setup Environment Files
 
 Create a `.env` file in the `Back_End/` folder based on `.env.example`
 (See `.env.example` for required environment variables)
 
 
 ### 2. Install Dependencies
-```bash
+
 cd Back_End
 npm install
-```
+
 
 ### 3. Run Backend Server
-```bash
+
 cd Back_End
 node server.js
-```
+
 
 Server will run at: `http://localhost:3001`
 
@@ -70,63 +70,39 @@ Returns server status
 
 ### `POST /register`
 Register new user
-```json
-{
-  "username": "Tester",
-  "password": "password"
-}
-```
+
 
 ### `POST /login`
 User login - returns JWT token
-```json
-{
-  "username": "Tester",
-  "password": "password"
-}
-```
 
 ### `POST /auth/google`
 Google OAuth authentication - returns JWT token
-```json
-{
-  "idToken": "Firebase ID token from Google Sign-In"
-}
-```
+
 
 ### `GET /progress-kuis`
 Retrieve user's quiz progress (requires token)
-```
-Headers: { Authorization: 'Bearer <token>' }
-```
+
 
 ### `POST /progress-kuis`
 Save user's quiz progress (requires token)
-```json
-{
-  "topik": "glb",
-  "skor": 8,
-  "jawaban": [0, 1, 2, ...],
-  "selesai": true
-}
-```
+
 
 ## Application Features
 
-### 🔐 Authentication
+###  Authentication
 - Username/Password registration and login
 - Google OAuth authentication
 - JWT token-based session management
 - Auto-redirect to login if not authenticated
 
-### 🎓 Learning Materials
+### Learning Materials
 - 4 Physics Topics: GLB, GLBB, Vertical Motion, Projectile Motion
 - YouTube learning videos
 - Complete explanations with examples
 - Study tips for each topic
 - Formula box with important equations
 
-### 🧪 Virtual Laboratory
+###  Virtual Laboratory
 - GLB Simulation (Uniform Linear Motion)
 - GLBB Simulation (Uniformly Accelerated Linear Motion)
 - Vertical Motion Simulation (Free Fall)
@@ -134,14 +110,14 @@ Save user's quiz progress (requires token)
 - Real-time visualization with graphs
 - Data analysis panel
 
-### 📝 Interactive Quiz
+###  Interactive Quiz
 - 10 questions per topic (40 questions total)
 - Progress automatically saved to database
-- "✓ Completed" badge for finished quizzes
+- "Completed" badge for finished quizzes
 - Score display and answer history
 - Can retake quizzes
 
-### 🌓 Dark Mode
+###  Dark Mode
 - Toggle dark/light theme
 - Consistent colors in all modes
 - Saved in localStorage
