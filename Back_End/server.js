@@ -265,6 +265,215 @@ const requestListener = async function (req, res) {
             kirimRespon(res, 500, { error: 'Server error occurred' });
         }
 
+    } else if (req.url === '/progress-lab' && req.method === 'GET') {
+        try {
+            const token = req.headers.authorization?.split(' ')[1];
+            
+            if (!token) {
+                kirimRespon(res, 401, { error: 'Token not found' });
+                return;
+            }
+
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const username = decoded.username;
+
+            const userRef = db.collection('users').doc(username);
+            const userDoc = await userRef.get();
+
+            if (!userDoc.exists) {
+                kirimRespon(res, 404, { error: 'User not found' });
+                return;
+            }
+
+            const progressSnapshot = await userRef.collection('progressLab').get();
+            
+            if (progressSnapshot.empty) {
+                kirimRespon(res, 200, { progressLab: {} });
+                return;
+            }
+
+            const progressLab = {};
+            progressSnapshot.forEach(doc => {
+                const data = doc.data();
+                progressLab[doc.id] = {
+                    topik: data.topik,
+                    terakhirDiakses: data.terakhirDiakses
+                };
+            });
+
+            kirimRespon(res, 200, { progressLab });
+
+        } catch (error) {
+            console.error('Error get lab progress:', error);
+            kirimRespon(res, 500, { error: 'Server error occurred' });
+        }
+
+    } else if (req.url === '/progress-lab' && req.method === 'POST') {
+        try {
+            const token = req.headers.authorization?.split(' ')[1];
+            
+            if (!token) {
+                kirimRespon(res, 401, { error: 'Token not found' });
+                return;
+            }
+
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const username = decoded.username;
+
+            const body = await bacaBody(req);
+            const { topik, terakhirDiakses } = body;
+
+            if (!topik) {
+                kirimRespon(res, 400, { error: 'Topic is required' });
+                return;
+            }
+
+            const userRef = db.collection('users').doc(username);
+            const progressRef = userRef.collection('progressLab').doc(topik);
+            
+            await progressRef.set({
+                topik: topik,
+                terakhirDiakses: terakhirDiakses || new Date()
+            }, { merge: true });
+
+            kirimRespon(res, 200, { message: 'Lab progress saved successfully' });
+
+        } catch (error) {
+            console.error('Error save lab progress:', error);
+            kirimRespon(res, 500, { error: 'Server error occurred' });
+        }
+
+    } else if (req.url === '/get-user-data' && req.method === 'GET') {
+        try {
+            const token = req.headers.authorization?.split(' ')[1];
+            
+            if (!token) {
+                kirimRespon(res, 401, { error: 'Token not found' });
+                return;
+            }
+
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const username = decoded.username;
+
+            const userRef = db.collection('users').doc(username);
+            const doc = await userRef.get();
+
+            if (!doc.exists) {
+                kirimRespon(res, 404, { error: 'User not found' });
+                return;
+            }
+
+            const userData = doc.data();
+            
+            kirimRespon(res, 200, { 
+                username: userData.username,
+                password: '••••••••'
+            });
+
+        } catch (error) {
+            console.error('Error get user data:', error);
+            kirimRespon(res, 500, { error: 'Server error occurred' });
+        }
+
+    } else if (req.url === '/update-profile' && req.method === 'POST') {
+        try {
+            const token = req.headers.authorization?.split(' ')[1];
+            
+            if (!token) {
+                kirimRespon(res, 401, { error: 'Token not found' });
+                return;
+            }
+
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const currentUsername = decoded.username;
+
+            const body = await bacaBody(req);
+            const { newUsername, newPassword } = body;
+
+            if (!newUsername && !newPassword) {
+                kirimRespon(res, 400, { error: 'New username or password required' });
+                return;
+            }
+
+            const userRef = db.collection('users').doc(currentUsername);
+            const userDoc = await userRef.get();
+
+            if (!userDoc.exists) {
+                kirimRespon(res, 404, { error: 'User not found' });
+                return;
+            }
+
+            const updateData = {};
+
+            if (newUsername && newUsername !== currentUsername) {
+                const newUserRef = db.collection('users').doc(newUsername);
+                const newUserDoc = await newUserRef.get();
+
+                if (newUserDoc.exists) {
+                    kirimRespon(res, 409, { error: 'Username already taken' });
+                    return;
+                }
+
+                const userData = userDoc.data();
+                updateData.username = newUsername;
+
+                if (newPassword) {
+                    const salt = await bcrypt.genSalt(10);
+                    updateData.password = await bcrypt.hash(newPassword, salt);
+                } else {
+                    updateData.password = userData.password;
+                }
+
+                updateData.updatedAt = new Date();
+
+                await newUserRef.set(updateData);
+
+                const progressSnapshot = await userRef.collection('progressKuis').get();
+                const batch = db.batch();
+                
+                progressSnapshot.forEach(doc => {
+                    const newProgressRef = newUserRef.collection('progressKuis').doc(doc.id);
+                    batch.set(newProgressRef, doc.data());
+                });
+                
+                await batch.commit();
+                await userRef.delete();
+
+                const newToken = jwt.sign(
+                    { username: newUsername },
+                    process.env.JWT_SECRET,
+                    { expiresIn: '24h' }
+                );
+
+                kirimRespon(res, 200, { 
+                    message: 'Profile updated successfully',
+                    token: newToken,
+                    username: newUsername
+                });
+
+            } else if (newPassword) {
+                const salt = await bcrypt.genSalt(10);
+                const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+                await userRef.update({
+                    password: hashedPassword,
+                    updatedAt: new Date()
+                });
+
+                kirimRespon(res, 200, { 
+                    message: 'Password updated successfully'
+                });
+            } else {
+                kirimRespon(res, 200, { 
+                    message: 'No changes made'
+                });
+            }
+
+        } catch (error) {
+            console.error('Error update profile:', error);
+            kirimRespon(res, 500, { error: 'Server error occurred' });
+        }
+
     } else {
         kirimRespon(res, 404, 'Page not found', 'text/plain');
     }

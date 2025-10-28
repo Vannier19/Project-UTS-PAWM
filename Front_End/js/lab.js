@@ -130,6 +130,8 @@ const ModulLab = {
     setup(topic) {
         if (!topic) return;
         
+        this.saveLabProgress(topic);
+        
         if (this.titleElement) {
             this.titleElement.textContent = `Simulasi: ${topic.toUpperCase()}`;
         }
@@ -551,6 +553,27 @@ const ModulLab = {
                 );
                 this.updateAnalysis();
             }
+        }
+    },
+
+    async saveLabProgress(topic) {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        try {
+            await fetch('https://project-uts-pawm-production.up.railway.app/progress-lab', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    topik: topic,
+                    terakhirDiakses: new Date().toISOString()
+                })
+            });
+        } catch (error) {
+            console.error('Error saving lab progress:', error);
         }
     }
 };

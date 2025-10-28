@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ModulMateri.init();
         ModulLab.init();
         ModulKuis.mulai();
+        ModulProfile.init();
         
         navLinks.forEach(link => link.addEventListener('click', handleNavClick));
         featureCards.forEach(card => card.addEventListener('click', handleFeatureCardClick));
@@ -83,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             quizMenu.hidden = false;
             quizInterface.hidden = true;
         }
+        if (viewId === 'profile') ModulProfile.loadProfileData();
     }
 
     function handleNavClick(e) {

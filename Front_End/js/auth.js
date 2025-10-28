@@ -55,6 +55,7 @@ loginForm.addEventListener('submit', async (e) => {
         if (response.ok) {
             localStorage.setItem('token', data.token);
             localStorage.setItem('username', data.username);
+            localStorage.setItem('userData', JSON.stringify({ username: data.username, password: password }));
             window.location.href = 'index.html';
         } else {
             showError(loginError, data.error || 'Login failed');
