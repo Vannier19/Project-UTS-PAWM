@@ -27,66 +27,6 @@ node server.js
 
 Server will run at: `http://localhost:3001`
 
-## Project Structure
-
-```
-Back_End/
-├── server.js              # Production server with Firebase
-├── package.json           # Dependencies
-└── .env.example           # Environment template
-
-Front_End/
-├── login.html             # Login/Register page
-├── index.html             # Main application (requires authentication)
-├── css/                   # Stylesheet files
-│   ├── auth.css           # Login/register styles (updated for neumorphism)
-│   ├── main.css           # Base application styles
-│   ├── sidebar.css        # Sidebar navigation
-│   ├── content.css        # Content area styles
-│   ├── lab.css            # Virtual laboratory styles
-│   ├── kuis.css           # Quiz system styles
-│   ├── materi-enhancement.css
-│   ├── modal.css          # Modal dialog styles
-│   ├── dark-mode-fix.css  # Dark mode adjustments
-│   └── neumorphism.css    # Neumorphism design system (UTS)
-├── js/                    # JavaScript files
-│   ├── auth.js            # Authentication logic
-│   ├── main.js            # Main application logic
-│   ├── theme.js           # Dark/Light mode
-│   ├── materi.js          # Learning materials module
-│   ├── lab.js             # Virtual laboratory module
-│   ├── kuis.js            # Quiz module
-│   └── data.js            # Quiz questions data
-└── assets/                # Images
-    ├── car.png
-    ├── rock.png
-    └── parabola.png
-```
-
-## API Endpoints
-
-### `GET /`
-Returns server status
-
-### `POST /register`
-Register new user
-
-
-### `POST /login`
-User login - returns JWT token
-
-### `POST /auth/google`
-Google OAuth authentication - returns JWT token
-
-
-### `GET /progress-kuis`
-Retrieve user's quiz progress (requires token)
-
-
-### `POST /progress-kuis`
-Save user's quiz progress (requires token)
-
-
 ## Application Features
 
 ###  Authentication
